@@ -3,6 +3,7 @@
  *
  */
 var $ = require('jquery');
+var soundFactory = require('./sounds');
 
 var cursorx = 10;
 var cursory = 10;
@@ -16,6 +17,7 @@ var up = 38;
 var right = 39;
 var down = 40;
 var ctx;
+var sound;
 
 function undrawMe(ctx) {
   drawAt(ctx, cursorx, cursory, field[cursorx][cursory]);
@@ -26,11 +28,11 @@ function drawMe(ctx) {
 }
 
 function beep() {
-
+  sound.beep();
 }
 
 function bloop() {
-
+  sound.bloop();
 }
 
 window.keyEvent = function(event) {
@@ -113,6 +115,7 @@ function drawField(ctx) {
 }
 
 $(document).ready(function() {
+  sound = soundFactory(new (window.AudioContext || window.webkitAudioContext)());
   console.log('in doc ready function');
   var canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
