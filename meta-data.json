@@ -1,0 +1,23 @@
+{
+  "models": [
+    {
+      "name": "javaman",
+      "properties": [
+        {
+          "name": "id",
+          "key": true,
+          "visible": true
+        },
+        {
+          "name": "author",
+          "visible": true,
+          "type": "email"
+        },
+        {
+          "name": "text",
+          "visible": true
+        }
+      ]
+    }
+  ]
+}
