@@ -13,6 +13,21 @@ module.exports = function(ctx) {
 
     '_field': [],
     '_ctx': ctx,
+    'getWorld': function() {
+      return this._field;
+    },
+    'setWorld': function(field) {
+      this._field = field;
+    },
+    'getState': function() {
+      return {
+        cursorx: this._cursorx,
+        cursory: this._cursory
+      };
+    },
+    'setState': function(state) {
+      this.moveTo(state.cursorx, state.cursory);
+    },
     'collision': function(x1, y1) {
       var x = this._cursorx + x1;
       var y = this._cursory + y1;
@@ -73,6 +88,9 @@ module.exports = function(ctx) {
       this.makeSquare(x*this.SIZE, y*this.SIZE, this.getColor(o));
     },
     'makeSquare': function(x, y, rgba) {
+      if(!this._ctx) {
+        return;
+      }
       var oldFillStyle = this._ctx.fillStyle;
       this._ctx.fillStyle = rgba;
       this._ctx.fillRect(x, y, this.SIZE, this.SIZE);

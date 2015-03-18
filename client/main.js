@@ -28,28 +28,64 @@ window.keyEvent = function(event) {
     if(field.collision(-1, 0)) {
       beep();
     } else {
-      field.moveLeft();
+      $.ajax({
+        url: 'go/left',
+        dataType: 'json',
+        success: function(data) {
+          field.setState(data);
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
       bloop();
     }
   } else if(key === right) {
     if(field.collision(1, 0)) {
       beep();
     } else {
-      field.moveRight();
+      $.ajax({
+        url: 'go/right',
+        dataType: 'json',
+        success: function(data) {
+          field.setState(data);
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
       bloop();
     }
   } else if(key === up) {
     if(field.collision(0, -1)) {
       beep();
     } else {
-      field.moveUp();
+      $.ajax({
+        url: 'go/up',
+        dataType: 'json',
+        success: function(data) {
+          field.setState(data);
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
       bloop();
     }
   } else if(key === down) {
     if(field.collision(0, 1)) {
       beep();
     } else {
-      field.moveDown();
+      $.ajax({
+        url: 'go/down',
+        dataType: 'json',
+        success: function(data) {
+          field.setState(data);
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
       bloop();
     }
   } else {
@@ -59,12 +95,27 @@ window.keyEvent = function(event) {
 
 $(document).ready(function() {
   sound = soundFactory(new (window.AudioContext || window.webkitAudioContext)());
-  console.log('in doc ready function');
   var canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
   field = fieldFactory(ctx);
-  field.makeField();
-  field.drawField();
-  field.moveTo(0,0);
-  field.drawMe();
+  $.ajax({
+    url: 'field',
+    dataType: 'json',
+    success: function(data) {
+      field.setWorld(data);
+      field.drawField();
+      $.ajax({
+        url: 'go',
+        dataType: 'json',
+        success: function(data) {
+          field.setState(data);
+        }.bind(this),
+        error: function(xhr, status, err) {
+        }.bind(this)
+      });
+    }.bind(this),
+    error: function(xhr, status, err) {
+    }.bind(this)
+  });
+
 });
