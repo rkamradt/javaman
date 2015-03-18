@@ -22,68 +22,70 @@ function bloop() {
   sound.bloop();
 }
 
+var uid;
+
 window.keyEvent = function(event) {
   var key = event.keyCode || event.which;
   if(key === left) {
-    if(field.collision(-1, 0)) {
+    if(field.collision(uid, -1, 0)) {
       beep();
     } else {
       $.ajax({
-        url: 'go/left',
+        url: 'world/go/left',
         dataType: 'json',
         success: function(data) {
-          field.setState(data);
+          field.setState(uid, data);
         }.bind(this),
         error: function(xhr, status, err) {
-          console.error(this.props.url, status, err.toString());
+          console.log('error getting state from server');
         }.bind(this)
       });
       bloop();
     }
   } else if(key === right) {
-    if(field.collision(1, 0)) {
+    if(field.collision(uid, 1, 0)) {
       beep();
     } else {
       $.ajax({
-        url: 'go/right',
+        url: 'world/go/right',
         dataType: 'json',
         success: function(data) {
-          field.setState(data);
+          field.setState(uid, data);
         }.bind(this),
         error: function(xhr, status, err) {
-          console.error(this.props.url, status, err.toString());
+          console.log('error getting state from server');
         }.bind(this)
       });
       bloop();
     }
   } else if(key === up) {
-    if(field.collision(0, -1)) {
+    if(field.collision(uid, 0, -1)) {
       beep();
     } else {
       $.ajax({
-        url: 'go/up',
+        url: 'world/go/up',
         dataType: 'json',
         success: function(data) {
-          field.setState(data);
+          field.setState(uid, data);
         }.bind(this),
         error: function(xhr, status, err) {
-          console.error(this.props.url, status, err.toString());
+          console.log('error getting state from server');
         }.bind(this)
       });
       bloop();
     }
   } else if(key === down) {
-    if(field.collision(0, 1)) {
+    if(field.collision(uid, 0, 1)) {
       beep();
     } else {
       $.ajax({
-        url: 'go/down',
+        url: 'world/go/down',
         dataType: 'json',
         success: function(data) {
-          field.setState(data);
+          field.setState(uid, data);
         }.bind(this),
         error: function(xhr, status, err) {
-          console.error(this.props.url, status, err.toString());
+          console.log('error getting state from server');
         }.bind(this)
       });
       bloop();
@@ -99,22 +101,25 @@ $(document).ready(function() {
   ctx = canvas.getContext('2d');
   field = fieldFactory(ctx);
   $.ajax({
-    url: 'field',
+    url: 'world',
     dataType: 'json',
     success: function(data) {
-      field.setWorld(data);
+      uid = data.uid;
+      field.setWorld(data.world);
       field.drawField();
       $.ajax({
-        url: 'go',
+        url: 'world/go',
         dataType: 'json',
         success: function(data) {
-          field.setState(data);
+          field.setState(uid, data);
         }.bind(this),
         error: function(xhr, status, err) {
+          console.log('error getting state from server');
         }.bind(this)
       });
     }.bind(this),
     error: function(xhr, status, err) {
+      console.log('error getting world from server');
     }.bind(this)
   });
 
