@@ -65,5 +65,6 @@ $(document).ready(function() {
   field = fieldFactory(ctx);
   field.makeField();
   field.drawField();
+  field.moveTo(0,0);
   field.drawMe();
 });

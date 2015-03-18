@@ -39,7 +39,7 @@ function makeBloop(audioCtx) {
      // Math.random() is in [0; 1.0]
      // audio needs to be in [-1.0; 1.0]
      var amp = i/frameCount;
-     buffer[i] = Math.random() * 0.5 * amp - 1;
+     buffer[i] = Math.random * 0.33 * amp - 1;
    }
   }
   return arrayBuffer;
