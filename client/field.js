@@ -20,6 +20,10 @@ module.exports = function(ctx) {
       });
       return this._users.length-1;
     },
+    'validateUser': function(uid, session) {
+      return uid < 0 || uid >= this._users.length ||
+        this._users[uid].session != session;
+    },
     'getWorld': function(uid) {
       return { world: this._field, 'uid': uid };
     },
@@ -67,7 +71,7 @@ module.exports = function(ctx) {
       this.undrawUsers();
       this._users[uid].cursory--;
       this.ensureCentered(uid);
-      this.drawMe();
+      this.drawUsers();
     },
     'moveDown': function(uid) {
       this.undrawUsers();

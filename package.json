@@ -27,9 +27,6 @@
     "body-parser": "^1.4.3",
     "express": "^4.4.5",
     "express-session": "^1.10.4",
-    "meta-app": "0.2.0",
-    "meta-app-mongo": "0.0.1",
-    "meta-app-rest": "0.0.1",
     "method-override": "^2.3.1",
     "morgan": "^1.5.1"
   },

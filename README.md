@@ -5,6 +5,8 @@ Currently single player...and no easter eggs...and pretty random
 
 Requires [Node.js](https://nodejs.org/) and [Grunt CLI](http://gruntjs.com/using-the-cli) to build
 
+download and run npm install
+
 To build:
 
 ```
@@ -15,4 +17,4 @@ To run:
 ```
 node server
 ```
-Then browse to http://localhost:9999/
+Then browse to http://localhost:9999/ move around with arrow keys

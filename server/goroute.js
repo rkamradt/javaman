@@ -2,12 +2,14 @@ module.exports = function(field) {
   var users = [];
   return function(req, res, next) {
     var uid = req.session.uid;
-    console.log('cookie: ' + JSON.stringify(req.session.cookie));
     if(isNaN(uid)) {
-      uid = req.session.uid = field.addUser(req.session.cookie);
-      console.log('no uid, setting to: ' + uid);
+      req.session.uuid = Math.floor(Math.random()*1000000);
+      uid = req.session.uid = field.addUser(req.session.uuid);
     } else {
-      console.log('uid: ' + uid);
+      if(!field.validateUser(uid, req.session.uuid)) {
+        req.session.uuid = Math.floor(Math.random()*1000000);
+        uid = req.session.uid = field.addUser(req.session.uuid);
+      }
     }
     switch(req.url) {
       case '/world':
