@@ -12,6 +12,7 @@ var gorouteFactory = require('./server/goroute');
 
 var field = fieldFactory();
 field.makeField();
+app.set('port', process.env.PORT || 9999);
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -28,6 +29,6 @@ app.use(expressSession({
 
 app.use(gorouteFactory(field));
 
-http.createServer(app).listen(9999, function() {
- console.log('Server up: http://localhost:' + 9999);
+http.createServer(app).listen(app.get('port'), function() {
+ console.log('Server up: http://localhost:' + app.get('port'));
 });
