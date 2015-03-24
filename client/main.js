@@ -15,18 +15,56 @@ var field;
 var sound;
 
 function beep() {
-  sound.beep();
+//  sound.beep();
 }
 
 function bloop() {
-  sound.bloop();
+//  sound.bloop();
 }
 
 var uid;
 
-window.keyEvent = function(event) {
-  var key = event.keyCode || event.which;
-  if(key === left) {
+var leftdown = false;
+var rightdown = false;
+var updown = false;
+var downdown = false;
+
+window.keyUpEvent = function(event) {
+  var key = event.keyCode;
+  switch(key) {
+    case left:
+      leftdown = false;
+      break;
+    case right:
+      rightdown = false;
+      break;
+    case up:
+      updown = false;
+      break;
+    case down:
+      downdown = false;
+  }
+};
+
+window.keyDownEvent = function(event) {
+  var key = event.keyCode;
+  switch(key) {
+    case left:
+      leftdown = true;
+      break;
+    case right:
+      rightdown = true;
+      break;
+    case up:
+      updown = true;
+      break;
+    case down:
+      downdown = true;
+  }
+};
+
+window.tick = function() {
+  if(leftdown) {
     if(field.collision(uid, -1, 0)) {
       beep();
     } else {
@@ -42,7 +80,7 @@ window.keyEvent = function(event) {
       });
       bloop();
     }
-  } else if(key === right) {
+  } else if(rightdown) {
     if(field.collision(uid, 1, 0)) {
       beep();
     } else {
@@ -58,7 +96,7 @@ window.keyEvent = function(event) {
       });
       bloop();
     }
-  } else if(key === up) {
+  } else if(updown) {
     if(field.collision(uid, 0, -1)) {
       beep();
     } else {
@@ -74,7 +112,7 @@ window.keyEvent = function(event) {
       });
       bloop();
     }
-  } else if(key === down) {
+  } else if(downdown) {
     if(field.collision(uid, 0, 1)) {
       beep();
     } else {
@@ -93,7 +131,7 @@ window.keyEvent = function(event) {
   } else {
     beep();
   }
-};
+}
 
 $(document).ready(function() {
   sound = soundFactory(new (window.AudioContext || window.webkitAudioContext)());
@@ -112,6 +150,7 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(data) {
           field.setState(uid, data);
+          window.setInterval(window.tick, 500);
         }.bind(this),
         error: function(xhr, status, err) {
           console.log('error getting state from server');
