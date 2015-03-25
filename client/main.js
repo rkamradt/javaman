@@ -1,3 +1,4 @@
+'use strict';
 /*
  * Copyright 2014 randalkamradt.
  *
@@ -43,11 +44,16 @@ window.keyUpEvent = function(event) {
       break;
     case down:
       downdown = false;
+      break;
   }
 };
 
 window.keyDownEvent = function(event) {
   var key = event.keyCode;
+  leftdown = false;  // keydown flags are mutually exclusive
+  rightdown = false;
+  updown = false;
+  downdown = false;
   switch(key) {
     case left:
       leftdown = true;
@@ -60,83 +66,54 @@ window.keyDownEvent = function(event) {
       break;
     case down:
       downdown = true;
+      break;
   }
 };
 
+var ticks = 0;
 window.tick = function() {
-  if(leftdown) {
-    if(field.collision(uid, -1, 0)) {
-      beep();
-    } else {
-      $.ajax({
-        url: 'world/go/left',
-        dataType: 'json',
-        success: function(data) {
-          field.setState(uid, data);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.log('error getting state from server');
-        }.bind(this)
-      });
-      bloop();
+  field.animate(ticks);
+  if(ticks%10 === 0) { // every 10th tick sync
+    var url = 'world/go';
+    if(ticks%20 === 0) {
+      var nextMove = '';
+      if(leftdown) {
+        nextMove = 'left';
+      } else if(rightdown) {
+        nextMove = 'right';
+      } else if(updown) {
+        nextMove = 'up';
+      } else if(downdown) {
+        nextMove = 'down';
+      }
+      if(nextMove) {
+        if(field.collision(uid, nextMove)) {
+          beep();
+        } else {
+          url += '/' + nextMove;
+          bloop();
+        }
+        nextMove = '';
+      }
     }
-  } else if(rightdown) {
-    if(field.collision(uid, 1, 0)) {
-      beep();
-    } else {
-      $.ajax({
-        url: 'world/go/right',
-        dataType: 'json',
-        success: function(data) {
-          field.setState(uid, data);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.log('error getting state from server');
-        }.bind(this)
-      });
-      bloop();
-    }
-  } else if(updown) {
-    if(field.collision(uid, 0, -1)) {
-      beep();
-    } else {
-      $.ajax({
-        url: 'world/go/up',
-        dataType: 'json',
-        success: function(data) {
-          field.setState(uid, data);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.log('error getting state from server');
-        }.bind(this)
-      });
-      bloop();
-    }
-  } else if(downdown) {
-    if(field.collision(uid, 0, 1)) {
-      beep();
-    } else {
-      $.ajax({
-        url: 'world/go/down',
-        dataType: 'json',
-        success: function(data) {
-          field.setState(uid, data);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.log('error getting state from server');
-        }.bind(this)
-      });
-      bloop();
-    }
-  } else {
-    beep();
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      success: function(data) {
+        field.setState(uid, data);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log('error getting state from server');
+      }.bind(this)
+    });
   }
-}
+  ticks++;
+};
 
 $(document).ready(function() {
   sound = soundFactory(new (window.AudioContext || window.webkitAudioContext)());
   var canvas = document.getElementById('canvas');
-  ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d');
   field = fieldFactory(ctx);
   $.ajax({
     url: 'world',
@@ -150,7 +127,7 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(data) {
           field.setState(uid, data);
-          window.setInterval(window.tick, 500);
+          window.setInterval(window.tick, 20);
         }.bind(this),
         error: function(xhr, status, err) {
           console.log('error getting state from server');

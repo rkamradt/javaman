@@ -1,3 +1,4 @@
+'use strict';
 
 module.exports = function(ctx) {
   return {
@@ -16,13 +17,15 @@ module.exports = function(ctx) {
       this._users.push({
         sessionid: session,
         cursorx: 0,
-        cursory: 0
+        previousx: 0,
+        cursory: 0,
+        previousy: 0
       });
       return this._users.length-1;
     },
     'validateUser': function(uid, session) {
       return uid < 0 || uid >= this._users.length ||
-        this._users[uid].session != session;
+        this._users[uid].session !== session;
     },
     'getWorld': function(uid) {
       return { world: this._field, 'uid': uid };
@@ -36,48 +39,38 @@ module.exports = function(ctx) {
       };
     },
     'setState': function(uid, state) {
-      this.undrawUsers();
-      this._users = state.users;
-      this.moveTo(uid, this._users[uid].cursorx, this._users[uid].cursory);
+      if(this._users.length !== state.users.length) {
+        this._users = state.users;
+        this.moveTo(uid, this._users[uid].cursorx, this._users[uid].cursory);
+      } else {
+        for(var i = 0; i < state.users.length; i++) {
+          this._users[i].cursorx = state.users[i].cursorx;
+          this._users[i].cursory = state.users[i].cursory;
+        }
+        this.ensureCentered(uid);
+      }
     },
-    'collision': function(uid, x1, y1) {
+    'collision': function(uid, direction) {
       if(uid >= this._users.length) {
         return;
       }
-      var x = this._users[uid].cursorx + x1;
-      var y = this._users[uid].cursory + y1;
+      var x = this._users[uid].cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
+      var y = this._users[uid].cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
       return (x < 0 || x >= this.MAXX || y < 0 || y >= this.MAXY || this._field[x][y] === 0);
     },
     'moveTo': function(uid, x, y) {
       this.undrawUsers();
       this._users[uid].cursorx = x;
+      this._users[uid].previousx = x;
       this._users[uid].cursory = y;
+      this._users[uid].previousy = y;
       this.ensureCentered(uid);
       this.drawUsers();
     },
-    'moveLeft': function(uid) {
-      this.undrawUsers();
-      this._users[uid].cursorx--;
+    'move': function(uid,direction) {
+      this._users[uid].cursorx += (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
+      this._users[uid].cursory += (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
       this.ensureCentered(uid);
-      this.drawUsers();
-    },
-    'moveRight': function(uid) {
-      this.undrawUsers();
-      this._users[uid].cursorx++;
-      this.ensureCentered(uid);
-      this.drawUsers();
-    },
-    'moveUp': function(uid) {
-      this.undrawUsers();
-      this._users[uid].cursory--;
-      this.ensureCentered(uid);
-      this.drawUsers();
-    },
-    'moveDown': function(uid) {
-      this.undrawUsers();
-      this._users[uid].cursory++;
-      this.ensureCentered(uid);
-      this.drawUsers();
     },
     'undrawUsers': function() {
       var self = this;
@@ -90,6 +83,19 @@ module.exports = function(ctx) {
       var self = this;
       this._users.forEach(function(user) {
         self.drawAt(user.cursorx, user.cursory, 4);
+      });
+    },
+    'animate': function(tick) {
+      var self = this;
+      this._users.forEach(function(user) {
+        if(tick%self.SIZE === 0) {
+          self.drawAt(user.previousx, user.previousy, self._field[user.previousx][user.previousy]);
+          user.previousx = user.cursorx;
+          user.previousy = user.cursory;
+          self.drawAt(user.cursorx, user.cursory, 4);
+        } else {
+          self.drawInterim(user.previousx, user.previousy, user.cursorx, user.cursory, tick, 4);
+        }
       });
     },
     'ensureCentered': function(uid) {
@@ -145,6 +151,21 @@ module.exports = function(ctx) {
           this.drawAt(x, y, this._field[x][y]);
         }
       }
+    },
+    'drawInterim': function(x1, y1, x2, y2, tick, o) {
+      if(x1 === x2 && y1 === y2) {
+        return;
+      }
+      var deltax = (x2-x1)*(tick%this.SIZE+1);
+      var deltay = (y2-y1)*(tick%this.SIZE+1);
+      var fieldColor = this._field[x1][y1];
+      x1 -= this._viewx;
+      y1 -= this._viewy;
+      if(x1 < 0 || x1 >= this._viewsize || y1 < 0 || y1 >= this._viewsize) {
+        return;
+      }
+      this.makeSquare(x1*this.SIZE, y1*this.SIZE, fieldColor);
+      this.makeSquare(x1*this.SIZE+deltax, y1*this.SIZE+deltay, this.getColor(o));
     },
     'drawAt': function(x, y, o) {
       x -= this._viewx;

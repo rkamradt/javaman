@@ -19,19 +19,19 @@ module.exports = function(field) {
         res.send(field.getState()).end();
         return;
       case '/world/go/up':
-        field.moveUp(uid);
+        field.move(uid, 'up');
         res.send(field.getState()).end();
         return;
       case '/world/go/down':
-        field.moveDown(uid);
+        field.move(uid, 'down');
         res.send(field.getState()).end();
         return;
       case '/world/go/right':
-        field.moveRight(uid);
+        field.move(uid, 'right');
         res.send(field.getState()).end();
         return;
       case '/world/go/left':
-        field.moveLeft(uid);
+        field.move(uid, 'left');
         res.send(field.getState()).end();
         return;
     }
