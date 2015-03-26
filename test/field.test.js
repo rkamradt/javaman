@@ -28,7 +28,7 @@ describe('creation and manipulation of field and user', function() {
       var sut = fieldFactory();
       sut.makeField(session);
       sut.addUser(session);
-      sut.moveDown(0);
+      sut.move(0, 'down');
       var state = sut.getState();
       state.should.be.instanceOf(Object).and.have.property('users');
       state.users.should.be.instanceOf(Array);
@@ -36,7 +36,7 @@ describe('creation and manipulation of field and user', function() {
       state.users[0].sessionid.should.be.exactly(session);
       state.users[0].cursorx.should.be.exactly(0);
       state.users[0].cursory.should.be.exactly(1);
-      sut.moveUp(0);
+      sut.move(0, 'up');
       state = sut.getState();
       state.should.be.instanceOf(Object).and.have.property('users');
       state.users.should.be.instanceOf(Array);
@@ -50,7 +50,7 @@ describe('creation and manipulation of field and user', function() {
       var sut = fieldFactory();
       sut.makeField(session);
       sut.addUser(session);
-      sut.moveRight(0);
+      sut.move(0, 'right');
       var state = sut.getState();
       state.should.be.instanceOf(Object).and.have.property('users');
       state.users.should.be.instanceOf(Array);
@@ -58,7 +58,7 @@ describe('creation and manipulation of field and user', function() {
       state.users[0].sessionid.should.be.exactly(session);
       state.users[0].cursorx.should.be.exactly(1);
       state.users[0].cursory.should.be.exactly(0);
-      sut.moveLeft(0);
+      sut.move(0, 'left');
       state = sut.getState();
       state.should.be.instanceOf(Object).and.have.property('users');
       state.users.should.be.instanceOf(Array);
