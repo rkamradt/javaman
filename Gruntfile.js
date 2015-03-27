@@ -125,7 +125,6 @@ module.exports = function(grunt) {
   });
   grunt.registerTask('build', ['jshint', 'browserify', 'copy:build' ]);
   grunt.registerTask('default', ['express:dev', 'watch']);
-  grunt.registerTask('deploy', ['build', 'express:dev']);
   grunt.registerTask('test', ['jshint', 'simplemocha' ]);
 
 };

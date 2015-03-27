@@ -1,1 +1,1 @@
-web: grunt deploy
+web: npm run deploy && node server
