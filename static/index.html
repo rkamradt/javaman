@@ -11,14 +11,34 @@
         <h1>Java Man</h1>
         <canvas id="canvas" width='400' height='400'></canvas>
         <p>
-          <span class='btn btn-success btn-xs' onmousedown='window.mouseDownEvent(event, "up")' onmouseup='window.mouseUpEvent(event, "up")'>UP</span>
+          <span class='btn btn-success btn-xs'
+            onmousedown='window.mouseDownEvent(event, "up")'
+            onmouseup='window.mouseUpEvent(event, "up")'
+            ontouchstart='window.mouseDownEvent(event, "up")'
+            ontouchend='window.mouseUpEvent(event, "up")'
+            >UP</span>
         </p>
         <p>
-          <span class='btn btn-success btn-xs' onmousedown='window.mouseDownEvent(event, "left")' onmouseup='window.mouseUpEvent(event, "left")'>LEFT</span>
-          <span class='btn btn-success btn-xs' onmousedown='window.mouseDownEvent(event, "right")' onmouseup='window.mouseUpEvent(event, "right")'>RIGHT</span>
+          <span class='btn btn-success btn-xs'
+            onmousedown='window.mouseDownEvent(event, "left")'
+            onmouseup='window.mouseUpEvent(event, "left")'
+            ontouchstart='window.mouseDownEvent(event, "left")'
+            ontouchend='window.mouseUpEvent(event, "left")'
+            >LEFT</span>
+          <span class='btn btn-success btn-xs'
+            onmousedown='window.mouseDownEvent(event, "right")'
+            onmouseup='window.mouseUpEvent(event, "right")'
+            ontouchstart='window.mouseDownEvent(event, "right")'
+            ontouchend='window.mouseUpEvent(event, "right")'
+            >RIGHT</span>
         </p>
         <p>
-          <span class='btn btn-success btn-xs' onmousedown='window.mouseDownEvent(event, "down")' onmouseup='window.mouseUpEvent(event, "down")'>DOWN</span>
+          <span class='btn btn-success btn-xs'
+            onmousedown='window.mouseDownEvent(event, "down")'
+            onmouseup='window.mouseUpEvent(event, "down")'
+            ontouchstart='window.mouseDownEvent(event, "down")'
+            ontouchend='window.mouseUpEvent(event, "down")'
+            >DOWN</span>
         </p>
       </div>
       <script src="js/index.js"></script>
