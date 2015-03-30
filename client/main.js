@@ -111,8 +111,14 @@ window.mouseDownEvent = function(e, dir) {
 };
 
 var ticks = 0;
-window.tick = function() {
+
+window.step = function(timestamp) {
   field.animate(ticks);
+  window.requestAnimationFrame(step);
+};
+
+
+window.tick = function() {
   if(ticks%10 === 0) { // every 10th tick sync
     var url = 'world/go';
     if(ticks%20 === 0) {
@@ -150,6 +156,24 @@ window.tick = function() {
   ticks++;
 };
 
+window.start = function(data) {
+  field.setWorld(data.world);
+  field.drawField();
+  uid = data.uid;
+  window.requestAnimationFrame(step); // start animation
+  $.ajax({
+    url: 'world/go',
+    dataType: 'json',
+    success: function(data) {
+      field.setState(uid, data);
+      window.setInterval(window.tick, 20);
+    },
+    error: function(xhr, status, err) {
+      console.log('error getting state from server');
+    }
+  });
+}
+
 $(document).ready(function() {
   sound = soundFactory(new (window.AudioContext || window.webkitAudioContext)());
   var canvas = document.getElementById('canvas');
@@ -159,24 +183,11 @@ $(document).ready(function() {
     url: 'world',
     dataType: 'json',
     success: function(data) {
-      uid = data.uid;
-      field.setWorld(data.world);
-      field.drawField();
-      $.ajax({
-        url: 'world/go',
-        dataType: 'json',
-        success: function(data) {
-          field.setState(uid, data);
-          window.setInterval(window.tick, 20);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.log('error getting state from server');
-        }.bind(this)
-      });
-    }.bind(this),
+      window.start(data);
+    },
     error: function(xhr, status, err) {
       console.log('error getting world from server');
-    }.bind(this)
+    }
   });
 
 });

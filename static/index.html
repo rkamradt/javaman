@@ -40,6 +40,12 @@
             ontouchend='window.mouseUpEvent(event, "down")'
             >DOWN</span>
         </p>
+        <p>
+          <span class='btn btn-success btn-xs'
+            onmousedown='window.resetEvent(event)'
+            ontouchstart='window.resetDownEvent(event)'
+            >RESET</span>
+        </p>
       </div>
       <script src="js/index.js"></script>
       <script src="js/bootstrap.min.js"></script>
