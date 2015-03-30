@@ -71,11 +71,11 @@ module.exports = function(grunt) {
     },
     copy: {
       build: {
-        expand: true,
-        cwd: 'static/',
-        src: '**',
-        dest: 'dist/',
-      },
+        files: [
+          { expand: true, cwd: 'static/', src: '**', dest: 'dist/' },
+          { expand: true, cwd: 'node_modules/bootstrap/dist/', src: '**', dest: 'dist/' }
+        ]
+      }
     },
     watch: {
       scripts: {

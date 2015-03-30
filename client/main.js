@@ -70,6 +70,44 @@ window.keyDownEvent = function(event) {
   }
 };
 
+window.mouseUpEvent = function(event, dir) {
+  switch(dir) {
+    case 'left':
+      leftdown = false;
+      break;
+    case 'right':
+      rightdown = false;
+      break;
+    case 'up':
+      updown = false;
+      break;
+    case 'down':
+      downdown = false;
+      break;
+  }
+};
+
+window.mouseDownEvent = function(event, dir) {
+  leftdown = false;  // keydown flags are mutually exclusive
+  rightdown = false;
+  updown = false;
+  downdown = false;
+  switch(dir) {
+    case 'left':
+      leftdown = true;
+      break;
+    case 'right':
+      rightdown = true;
+      break;
+    case 'up':
+      updown = true;
+      break;
+    case 'down':
+      downdown = true;
+      break;
+  }
+};
+
 var ticks = 0;
 window.tick = function() {
   field.animate(ticks);

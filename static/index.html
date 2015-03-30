@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Java Man</title>
+      <meta name='viewport' content='width=device-width,initial-scale=1.0'
+      <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <title>Java Man</title>
     </head>
     <body onkeydown='window.keyDownEvent(event)' onkeyup='window.keyUpEvent(event)'>
-        <canvas id="canvas" width='600' height='600'></canvas>
-        <script src="js/index.js"></script>
+      <div class='container'>
+        <h1>Java Man</h1>
+        <canvas id="canvas" width='400' height='400'></canvas>
+        <p>
+          <a class='btn btn-success btn-xs' href='#' onmousedown='window.mouseDownEvent(event, "up")' onmouseup='window.mouseUpEvent(event, "up")'>UP</a>
+        </p>
+        <p>
+          <a class='btn btn-success btn-xs' href='#' onmousedown='window.mouseDownEvent(event, "left")' onmouseup='window.mouseUpEvent(event, "left")'>LEFT</a>
+          <a class='btn btn-success btn-xs' href='#' onmousedown='window.mouseDownEvent(event, "right")' onmouseup='window.mouseUpEvent(event, "right")'>RIGHT</a>
+        </p>
+        <p>
+          <a class='btn btn-success btn-xs' href='#' onmousedown='window.mouseDownEvent(event, "down")' onmouseup='window.mouseUpEvent(event, "down")'>DOWN</a>
+        </p>
+      </div>
+      <script src="js/index.js"></script>
+      <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
