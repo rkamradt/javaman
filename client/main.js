@@ -70,7 +70,8 @@ window.keyDownEvent = function(event) {
   }
 };
 
-window.mouseUpEvent = function(event, dir) {
+window.mouseUpEvent = function(e, dir) {
+  e.preventDefault();
   switch(dir) {
     case 'left':
       leftdown = false;
@@ -87,7 +88,8 @@ window.mouseUpEvent = function(event, dir) {
   }
 };
 
-window.mouseDownEvent = function(event, dir) {
+window.mouseDownEvent = function(e, dir) {
+  e.preventDefault();
   leftdown = false;  // keydown flags are mutually exclusive
   rightdown = false;
   updown = false;
