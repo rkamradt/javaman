@@ -6,48 +6,47 @@
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <title>Java Man</title>
     </head>
-    <body onkeydown='window.keyDownEvent(event)' onkeyup='window.keyUpEvent(event)'>
+    <body onkeydown='handler.keyDown(event)' onkeyup='handler.keyUp(event)'>
       <div class='container'>
         <h1>Java Man</h1>
         <canvas id="canvas" width='400' height='400'></canvas>
         <p>
           <span class='btn btn-success btn-xs'
-            onmousedown='window.mouseDownEvent(event, "up")'
-            onmouseup='window.mouseUpEvent(event, "up")'
-            ontouchstart='window.mouseDownEvent(event, "up")'
-            ontouchend='window.mouseUpEvent(event, "up")'
-            >UP</span>
+            onmousedown='handler.actionStart(event, "up")'
+            onmouseup='handler.actionEnd(event, "up")'
+            ontouchstart='handler.actionStart(event, "up")'
+            ontouchend='handler.actionEnd(event, "up")'>UP</span>
         </p>
         <p>
           <span class='btn btn-success btn-xs'
-            onmousedown='window.mouseDownEvent(event, "left")'
-            onmouseup='window.mouseUpEvent(event, "left")'
-            ontouchstart='window.mouseDownEvent(event, "left")'
-            ontouchend='window.mouseUpEvent(event, "left")'
-            >LEFT</span>
+            onmousedown='handler.actionStart(event, "left")'
+            onmouseup='handler.actionEnd(event, "left")'
+            ontouchstart='handler.actionStart(event, "left")'
+            ontouchend='handler.actionEnd(event, "left")'>LEFT</span>
           <span class='btn btn-success btn-xs'
-            onmousedown='window.mouseDownEvent(event, "right")'
-            onmouseup='window.mouseUpEvent(event, "right")'
-            ontouchstart='window.mouseDownEvent(event, "right")'
-            ontouchend='window.mouseUpEvent(event, "right")'
-            >RIGHT</span>
+            onmousedown='handler.actionStart(event, "right")'
+            onmouseup='handler.actionEnd(event, "right")'
+            ontouchstart='handler.actionStart(event, "right")'
+            ontouchend='handler.actionEnd(event, "right")'>RIGHT</span>
         </p>
         <p>
           <span class='btn btn-success btn-xs'
-            onmousedown='window.mouseDownEvent(event, "down")'
-            onmouseup='window.mouseUpEvent(event, "down")'
-            ontouchstart='window.mouseDownEvent(event, "down")'
-            ontouchend='window.mouseUpEvent(event, "down")'
-            >DOWN</span>
+            onmousedown='handler.actionStart(event, "down")'
+            onmouseup='handler.actionEnd(event, "down")'
+            ontouchstart='handler.actionStart(event, "down")'
+            ontouchend='handler.actionEnd(event, "down")'>DOWN</span>
         </p>
         <p>
           <span class='btn btn-success btn-xs'
-            onmousedown='window.resetEvent(event)'
-            ontouchstart='window.resetDownEvent(event)'
+            onmousedown='handler.actionStart(event, "reset")'
+            ontouchstart='handler.actionEnd(event, "reset")'
             >RESET</span>
+          <span class='btn btn-success btn-xs'
+            onmousedown='handler.actionStart(event, "stop")'
+            ontouchstart='handler.actionEnd(event, "stop")'>STOP</span>
         </p>
       </div>
       <script src="js/index.js"></script>
-      <script src="js/bootstrap.min.js"></script>
+      <!--script src="js/bootstrap.min.js"></script-->
     </body>
 </html>

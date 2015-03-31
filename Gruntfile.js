@@ -102,7 +102,7 @@ module.exports = function(grunt) {
     },
     browserify: {
       client: {
-        src: ['client/main.js'],
+        src: ['client/index.js'],
         dest: 'dist/js/index.js',
         options: {
           debug: true,
