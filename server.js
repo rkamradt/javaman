@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var expressSession = require('express-session');
-var fieldFactory = require('./client/field');
+var fieldFactory = require('./server/field');
 var gorouteFactory = require('./server/goroute');
 
 var field = fieldFactory();

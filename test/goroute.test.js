@@ -1,5 +1,5 @@
 var goRouteFactory = require('../server/goroute');
-var fieldFactory = require('../client/field');
+var fieldFactory = require('../server/field');
 var should = require('should');
 
 var field = fieldFactory();
@@ -43,7 +43,7 @@ describe('routing a web service', function() {
     });
     sent.should.be.instanceOf(Object);
     sent.world.should.be.instanceOf(Array);
-    sent.world.should.have.length(field.MAXX);
+    sent.world.should.have.length(100);
     sent.uid.should.be.exactly(0);
     req.session.uid.should.be.exactly(0);
     req.session.uuid.should.be.instanceOf(Object);

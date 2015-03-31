@@ -1,4 +1,4 @@
-var fieldFactory = require('../client/field');
+var fieldFactory = require('../server/field');
 var should = require('should');
 
 describe('creation and manipulation of field and user', function() {
@@ -75,7 +75,7 @@ describe('creation and manipulation of field and user', function() {
       sut.makeField(session);
       var result = sut.getWorld(0);
       result.world.should.be.instanceOf(Array);
-      result.world.should.have.length(sut.MAXX);
+      result.world.should.have.length(100);
       result.uid.should.be.exactly(0);
     });
 });

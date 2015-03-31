@@ -7,12 +7,17 @@ var leftdown = false;
 var rightdown = false;
 var updown = false;
 var downdown = false;
+var ticks = 0;
 
 var internalStep = function(timestamp) {
-  theController.state.animate();
+  theController.state.animate(ticks);
   if(ticker) { // don't continue animating if the ticker is stoped
     window.requestAnimationFrame(internalStep);
   }
+};
+
+var internalTick = function() {
+  theController.tick();
 };
 
 module.exports = function(sounds, ctx, ajax) {
@@ -26,11 +31,10 @@ module.exports = function(sounds, ctx, ajax) {
         this.server = serverFactory(ajax, this);
         this.handler = handlerFactory(this);
         window.handler = this.handler; // export to global for html event binder
-        this.state.createWorld();
         this.server.createWorld();
       },
       'start': function() {
-        ticker = window.setInterval(this.state.tick, 20);
+        ticker = window.setInterval(internalTick, 20);
         window.requestAnimationFrame(internalStep); // start animation
       },
       'stop': function() {
@@ -62,22 +66,22 @@ module.exports = function(sounds, ctx, ajax) {
         this.server.sync(event);
       },
       'actionStart': function(dir) {
-        this.leftdown = false;  // keydown flags are mutually exclusive
-        this.rightdown = false;
-        this.updown = false;
-        this.downdown = false;
+        leftdown = false;  // keydown flags are mutually exclusive
+        rightdown = false;
+        updown = false;
+        downdown = false;
         switch(dir) {
           case 'left':
-            this.leftdown = true;
+            leftdown = true;
             break;
           case 'right':
-            this.rightdown = true;
+            rightdown = true;
             break;
           case 'up':
-            this.updown = true;
+            updown = true;
             break;
           case 'down':
-            this.downdown = true;
+            downdown = true;
             break;
           case 'start':
             if(!ticker) {
@@ -92,21 +96,47 @@ module.exports = function(sounds, ctx, ajax) {
       'actionStop': function(dir) {
         switch(dir) {
           case 'left':
-            this.leftdown = false;
+            leftdown = false;
             break;
           case 'right':
-            this.rightdown = false;
+            rightdown = false;
             break;
           case 'up':
-            this.updown = false;
+            updown = false;
             break;
           case 'down':
-            this.downdown = false;
+            downdown = false;
             break;
         }
       },
       'reset': function() {
         this.server.reset();
+      },
+      'tick': function() {
+        var nextMove;
+        if(ticks%10 === 0) { // every 10th tick sync
+          if(ticks%20 === 0) {
+            if(leftdown) {
+              nextMove = 'left';
+            } else if(rightdown) {
+              nextMove = 'right';
+            } else if(updown) {
+              nextMove = 'up';
+            } else if(downdown) {
+              nextMove = 'down';
+            }
+            if(nextMove) {
+              if(this.state.collision(nextMove)) {
+                nextMove = '';
+                sounds.beep();
+              } else {
+                sounds.bloop();
+              }
+            }
+          }
+          this.sync(nextMove);
+        }
+        ticks++;
       }
     };
   }
