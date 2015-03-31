@@ -16,7 +16,20 @@ module.exports = function(ctx) {
       return uid < 0 || uid >= users.length ||
         users[uid].session !== session;
     },
-    'getWorld': function(uid) {
+    'resetWorld': function() {
+      field = [];
+      return {
+        'world': field,
+        'uid': -1
+      };
+    },
+    'createWorld': function(uid) {
+      for(var x = 0; x < MAXX; x++) {
+        field.push([]);
+        for(var y = 0; y < MAXY; y++) {
+          field[x].push(Math.floor(Math.random()*4));
+        }
+      }
       return {
         'world': field,
         'uid': uid
@@ -26,14 +39,6 @@ module.exports = function(ctx) {
       return {
         'users': users
       };
-    },
-    'makeField': function() {
-      for(var x = 0; x < MAXX; x++) {
-        field.push([]);
-        for(var y = 0; y < MAXY; y++) {
-          field[x].push(Math.floor(Math.random()*4));
-        }
-      }
     },
     'moveTo': function(uid, x, y) {
       users[uid].cursorx = x;

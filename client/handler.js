@@ -13,11 +13,7 @@ module.exports = function(controller) {
     },
     'actionEnd': function(e, command) {
       e.preventDefault();
-      if(command === 'stop') {
-        controller.stop();
-      } else {
-        controller.actionStop(command);
-      }
+      controller.actionStop(command);
     },
     'actionStart': function(e, command) {
       e.preventDefault();

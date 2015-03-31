@@ -12,18 +12,16 @@ describe('routing a web service', function() {
   var req;
   var res;
   before(function(done) {
-    field = fieldFactory();
-    field.makeField();
     req = { // define session here so session persists
       'session': {},
       'url': ''
     };
+    sut = goRouteFactory();
     done();
   });
   beforeEach(function(done) {
     sent = '';
     ended = false;
-    sut = goRouteFactory(field);
     res = {
       'send': function(str) {
         sent = str;
@@ -50,6 +48,10 @@ describe('routing a web service', function() {
     ended.should.be.exactly(true);
   });
   it('should allow a get on /world/go', function() {
+    req.url = '/world';
+    sut(req, res, function() {
+      throw Error('Should not call next');
+    });
     req.url = '/world/go';
     sut(req, res, function() {
       throw Error('Should not call next');
@@ -63,6 +65,10 @@ describe('routing a web service', function() {
     ended.should.be.exactly(true);
   });
   it('should allow a get on /world/go/down', function() {
+    req.url = '/world';
+    sut(req, res, function() {
+      throw Error('Should not call next');
+    });
     req.url = '/world/go/down';
     sut(req, res, function() {
       throw Error('Should not call next');
@@ -76,6 +82,10 @@ describe('routing a web service', function() {
     ended.should.be.exactly(true);
   });
   it('should allow a get on /world/go/up', function() {
+    req.url = '/world';
+    sut(req, res, function() {
+      throw Error('Should not call next');
+    });
     req.url = '/world/go/up';
     sut(req, res, function() {
       throw Error('Should not call next');
@@ -89,6 +99,10 @@ describe('routing a web service', function() {
     ended.should.be.exactly(true);
   });
   it('should allow a get on /world/go/right', function() {
+    req.url = '/world';
+    sut(req, res, function() {
+      throw Error('Should not call next');
+    });
     req.url = '/world/go/right';
     sut(req, res, function() {
       throw Error('Should not call next');
@@ -102,6 +116,10 @@ describe('routing a web service', function() {
     ended.should.be.exactly(true);
   });
   it('should allow a get on /world/go/left', function() {
+    req.url = '/world';
+    sut(req, res, function() {
+      throw Error('Should not call next');
+    });
     req.url = '/world/go/left';
     sut(req, res, function() {
       throw Error('Should not call next');

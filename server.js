@@ -7,11 +7,8 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var expressSession = require('express-session');
-var fieldFactory = require('./server/field');
 var gorouteFactory = require('./server/goroute');
 
-var field = fieldFactory();
-field.makeField();
 app.set('port', process.env.PORT || 9999);
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -27,7 +24,7 @@ app.use(expressSession({
   resave: true
 }));
 
-app.use(gorouteFactory(field));
+app.use(gorouteFactory());
 
 http.createServer(app).listen(app.get('port'), function() {
  console.log('Server up: http://localhost:' + app.get('port'));

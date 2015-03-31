@@ -52,7 +52,7 @@ module.exports = function(sound, ctx, controller) {
         }
         var x = users[uid].cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
         var y = users[uid].cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
-        return (x < 0 || x >= this.MAXX || y < 0 || y >= this.MAXY || field.getColor(x,y) === 0);
+        return (x < 0 || x >= this.MAXX || y < 0 || y >= this.MAXY || field.getFieldToken(x,y) === 0);
       },
       'undrawUsers': function() {
         users.forEach(function(user) {

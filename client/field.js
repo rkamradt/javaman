@@ -53,8 +53,11 @@ module.exports = function(ctx) {
         }
       }
     },
+    'getFieldToken': function(x, y) {
+      return field[x][y];
+    },
     'drawFieldAt': function(x, y) {
-      this.drawAt(x, y, field[x][y]);
+      this.drawAt(x, y, this.getFieldToken(x,y));
     },
     'drawInterim': function(x1, y1, x2, y2, tick, o) {
       if(x1 === x2 && y1 === y2) {
@@ -62,7 +65,7 @@ module.exports = function(ctx) {
       }
       var deltax = (x2-x1)*(tick%SIZE+1);
       var deltay = (y2-y1)*(tick%SIZE+1);
-      var fieldColor = field[x1][y1];
+      var fieldColor = this.getFieldToken(x1,y1);
       x1 -= viewx;
       y1 -= viewy;
       if(x1 < 0 || x1 >= VIEWSIZE || y1 < 0 || y1 >= VIEWSIZE) {

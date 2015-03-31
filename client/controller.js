@@ -10,8 +10,8 @@ var downdown = false;
 var ticks = 0;
 
 var internalStep = function(timestamp) {
-  theController.state.animate(ticks);
   if(ticker) { // don't continue animating if the ticker is stoped
+    theController.state.animate(ticks);
     window.requestAnimationFrame(internalStep);
   }
 };
@@ -54,6 +54,9 @@ module.exports = function(sounds, ctx, ajax) {
           this.start();
         }
       },
+      'resetSuccess': function(data) {
+        this.server.createWorld();
+      },
       'error': function(logMessage, alertMessage) {
         if(logMessage) {
           console.log(logMessage);
@@ -65,12 +68,12 @@ module.exports = function(sounds, ctx, ajax) {
       'sync': function(event) {
         this.server.sync(event);
       },
-      'actionStart': function(dir) {
+      'actionStart': function(command) {
         leftdown = false;  // keydown flags are mutually exclusive
         rightdown = false;
         updown = false;
         downdown = false;
-        switch(dir) {
+        switch(command) {
           case 'left':
             leftdown = true;
             break;
@@ -88,13 +91,16 @@ module.exports = function(sounds, ctx, ajax) {
               this.start();
             }
             break;
+          case 'stop':
+            this.stop();
+            break;
           case 'reset':
             this.reset();
             break;
         }
       },
-      'actionStop': function(dir) {
-        switch(dir) {
+      'actionStop': function(command) {
+        switch(command) {
           case 'left':
             leftdown = false;
             break;
@@ -110,6 +116,7 @@ module.exports = function(sounds, ctx, ajax) {
         }
       },
       'reset': function() {
+        this.stop();
         this.server.reset();
       },
       'tick': function() {

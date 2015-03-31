@@ -1,5 +1,8 @@
-module.exports = function(field) {
+var fieldFactory = require('./field');
+
+module.exports = function() {
   var users = [];
+  var field = fieldFactory();
   return function(req, res, next) {
     var uid = req.session.uid;
     if(isNaN(uid)) {
@@ -13,7 +16,10 @@ module.exports = function(field) {
     }
     switch(req.url) {
       case '/world':
-        res.send(field.getWorld(uid)).end();
+        res.send(field.createWorld(uid)).end();
+        return;
+      case '/world/reset':
+        res.send(field.resetWorld()).end();
         return;
       case '/world/go':
         res.send(field.getState()).end();
