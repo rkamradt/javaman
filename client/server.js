@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 
 var logError = function(xhr, status, err) {
   console.log(status + ' ' + err);

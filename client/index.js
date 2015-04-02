@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 var $ = require('jquery');
 var soundsFactory = require('./sounds');
 var controllerFactory = require('./controller');

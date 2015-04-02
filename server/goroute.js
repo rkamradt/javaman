@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 var fieldFactory = require('./field');
 
 module.exports = function() {

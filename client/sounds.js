@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 
 function makeBeep(audioCtx) {
   var channels = 2;

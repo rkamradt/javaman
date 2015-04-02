@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 var express = require('express');
 var http = require('http');
 var fs = require('fs');

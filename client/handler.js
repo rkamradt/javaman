@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 var LEFT = 37;
 var UP = 38;
 var RIGHT = 39;

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
 var stateFactory = require('./state');
 var serverFactory = require('./server');
 var handlerFactory = require('./handler');

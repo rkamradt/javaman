@@ -1,5 +1,9 @@
-var goRouteFactory = require('../server/goroute');
-var fieldFactory = require('../server/field');
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
+var goRouteFactory = require('../../server/goroute');
+var fieldFactory = require('../../server/field');
 var should = require('should');
 
 var field = fieldFactory();

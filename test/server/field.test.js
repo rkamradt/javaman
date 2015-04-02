@@ -1,4 +1,8 @@
-var fieldFactory = require('../server/field');
+/*
+ * Copyright 2015 randalkamradt.
+ *
+ */
+var fieldFactory = require('../../server/field');
 var should = require('should');
 
 describe('creation and manipulation of field and user', function() {

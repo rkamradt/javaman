@@ -6,17 +6,20 @@ var fieldFactory = require('./field');
 
  var VIEWSIZE = 20;
  var SIZE = 20;
- var MAXX = 100;
- var MAXY = 100;
 
 module.exports = function(sound, ctx, controller) {
   var users = [];
   var uid;
-  var field = fieldFactory(ctx);
+  var field = fieldFactory(ctx, VIEWSIZE, SIZE);
+  var maxx = 0;
+  var maxy = 0;
 
    return {
       'setWorldState': function(data) {
         field.setWorld(data.world);
+        var max = field.getMax();
+        maxx = max.x;
+        maxy = max.y;
         field.drawField();
         uid = data.uid;
       },
@@ -33,17 +36,19 @@ module.exports = function(sound, ctx, controller) {
               previousy: 0
             };
           }
-          if(users[i].cursorx !== data.users[i].cursorx) {
-            users[i].cursorx = data.users[i].cursorx;
-          }
-          if(users[i].cursory !== data.users[i].cursory) {
-            users[i].cursory = data.users[i].cursory;
-          }
+          users[i].cursorx = data.users[i].cursorx;
+          users[i].cursory = data.users[i].cursory;
         }
         var user = users[uid];
         if(user.previousx !== user.cursorx ||
-            user.previousy !== user.previousy) {
+            user.previousy !== user.cursory) {
           field.ensureCentered(users[uid]);
+        }
+        if(Math.abs(user.previousx-user.cursorx) > 1) {
+          user.previousx = user.cursorx; // prevent 'jumping'
+        }
+        if(Math.abs(user.previousy-user.cursory) > 1) {
+          user.previousy = user.cursory; // prevent 'jumping'
         }
       },
       'collision': function(direction) {
@@ -52,7 +57,7 @@ module.exports = function(sound, ctx, controller) {
         }
         var x = users[uid].cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
         var y = users[uid].cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
-        return (x < 0 || x >= this.MAXX || y < 0 || y >= this.MAXY || field.getFieldToken(x,y) === 0);
+        return (x < 0 || x >= maxx || y < 0 || y >= maxy || field.getFieldToken(x,y) === 0);
       },
       'undrawUsers': function() {
         users.forEach(function(user) {
