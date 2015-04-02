@@ -10,38 +10,39 @@
       <div class='container'>
         <h1>Java Man</h1>
         <canvas id="canvas" width='400' height='400'></canvas>
+        <img id="squares" hidden src="img/squares.png">
         <p>
-          <span class='btn btn-success btn-xs'
+          <span class='btn btn-success btn-sm'
             onmousedown='handler.actionStart(event, "up")'
             onmouseup='handler.actionEnd(event, "up")'
             ontouchstart='handler.actionStart(event, "up")'
             ontouchend='handler.actionEnd(event, "up")'>UP</span>
         </p>
         <p>
-          <span class='btn btn-success btn-xs'
+          <span class='btn btn-success btn-sm'
             onmousedown='handler.actionStart(event, "left")'
             onmouseup='handler.actionEnd(event, "left")'
             ontouchstart='handler.actionStart(event, "left")'
             ontouchend='handler.actionEnd(event, "left")'>LEFT</span>
-          <span class='btn btn-success btn-xs'
+          <span class='btn btn-success btn-sm'
             onmousedown='handler.actionStart(event, "right")'
             onmouseup='handler.actionEnd(event, "right")'
             ontouchstart='handler.actionStart(event, "right")'
             ontouchend='handler.actionEnd(event, "right")'>RIGHT</span>
         </p>
         <p>
-          <span class='btn btn-success btn-xs'
+          <span class='btn btn-success btn-sm'
             onmousedown='handler.actionStart(event, "down")'
             onmouseup='handler.actionEnd(event, "down")'
             ontouchstart='handler.actionStart(event, "down")'
             ontouchend='handler.actionEnd(event, "down")'>DOWN</span>
         </p>
         <p>
-          <span class='btn btn-success btn-xs'
+          <span class='btn btn-success btn-sm'
             onmousedown='handler.actionStart(event, "reset")'
             ontouchstart='handler.actionEnd(event, "reset")'
             >RESET</span>
-          <span class='btn btn-success btn-xs'
+          <span class='btn btn-success btn-sm'
             onmousedown='handler.actionStart(event, "stop")'
             ontouchstart='handler.actionEnd(event, "stop")'>STOP</span>
         </p>

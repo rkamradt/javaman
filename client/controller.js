@@ -24,14 +24,14 @@ var internalTick = function() {
   theController.tick();
 };
 
-module.exports = function(sounds, ctx, ajax) {
+module.exports = function(sounds, ctx, ajax, squares) {
   if(!theController) { // singleton pattern
     theController = {
       'state': {},
       'server': {},
       'handler': {},
       'init': function() {
-        this.state = stateFactory(sounds, ctx, this);
+        this.state = stateFactory(sounds, ctx, squares, this);
         this.server = serverFactory(ajax, this);
         this.handler = handlerFactory(this);
         window.handler = this.handler; // export to global for html event binder

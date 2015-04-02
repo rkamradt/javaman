@@ -3,7 +3,7 @@
  *
  */
 
-module.exports = function(ctx, viewsize, squaresize) {
+module.exports = function(ctx, viewsize, squaresize, squares) {
   var field = [];
   var viewx = 0;
   var viewy = 0;
@@ -98,26 +98,28 @@ module.exports = function(ctx, viewsize, squaresize) {
       }
       this.makeSquare(x*squaresize, y*squaresize, this.getColor(o));
     },
-    'makeSquare': function(x, y, rgba) {
-      var oldFillStyle = ctx.fillStyle;
-      ctx.fillStyle = rgba;
-      ctx.fillRect(x, y, squaresize, squaresize);
-      ctx.fillStyle = oldFillStyle;
+    'makeSquare': function(x, y, i) {
+      ctx.drawImage(squares, i*squaresize, 0, squaresize, squaresize, x, y, squaresize, squaresize);
+//      var oldFillStyle = ctx.fillStyle;
+//      ctx.fillStyle = rgba;
+//      ctx.fillRect(x, y, squaresize, squaresize);
+//      ctx.fillStyle = oldFillStyle;
     },
     'getColor': function(i) {
-      if(i === 0) {
-        return 'rgb(255,255,128)';
-      } else if(i === 1) {
-        return 'rgb(255,128,255)';
-      } else if(i === 2) {
-        return 'rgb(128,128,255)';
-      } else if(i === 3) {
-        return 'rgb(255,128,128)';
-      } else if(i === 4) {
-        return 'rgb(0,0,0)';
-      } else {
-        throw Error('color ' + i + ' not defined');
-      }
+      return i;
+//      if(i === 0) {
+//        return 'rgb(255,255,128)';
+//      } else if(i === 1) {
+//        return 'rgb(255,128,255)';
+//      } else if(i === 2) {
+//        return 'rgb(128,128,255)';
+//      } else if(i === 3) {
+//        return 'rgb(255,128,128)';
+//      } else if(i === 4) {
+//        return 'rgb(0,0,0)';
+//      } else {
+//        throw Error('color ' + i + ' not defined');
+//      }
     }
   };
 };

@@ -25,14 +25,12 @@ describe('drawing of the field', function() {
   };
   beforeEach(function() {
     var ctx = {
-      'fillStyle': '',
-      'fillRect': function(x, y, xd, yd) {
+      'drawImage': function(square, sx, sy, sw, sh, x, y, xd, yd) {
         fillRectResults.push({
           'x': x,
           'y': y,
           'xd': xd,
           'yd': yd,
-          'style': this.fillStyle
         });
       }
     };
@@ -62,12 +60,10 @@ describe('drawing of the field', function() {
       sut.drawFieldAt(0,0);
       fillRectResults.should.be.instanceOf(Array);
       fillRectResults.should.have.length(1);
-      fillRectResults[0].style.should.be.exactly(sut.getColor(sut.getFieldToken(0,0)));
       fillRectResults = [];
       sut.drawFieldAt(VIEWSIZE-1,VIEWSIZE-1);
       fillRectResults.should.be.instanceOf(Array);
       fillRectResults.should.have.length(1);
-      fillRectResults[0].style.should.be.exactly(sut.getColor(sut.getFieldToken(VIEWSIZE-1,VIEWSIZE-1)));
     });
     it('should not be able to draw an item out of bounds', function() {
       try {
@@ -120,25 +116,16 @@ describe('drawing of the field', function() {
   });
   describe('getting styles', function() {
     it('should be able to get a style', function() {
-      var style = sut.getColor(0);
-      style.should.be.exactly('rgb(255,255,128)');
-      style = sut.getColor(1);
-      style.should.be.exactly('rgb(255,128,255)');
-      style = sut.getColor(2);
-      style.should.be.exactly('rgb(128,128,255)');
-      style = sut.getColor(3);
-      style.should.be.exactly('rgb(255,128,128)');
-      style = sut.getColor(4);
-      style.should.be.exactly('rgb(0,0,0)');
-    });
-    it('should not be able to get an invalid style', function() {
-      try {
-        sut.getColor(5);
-        fail('expected exception not thrown');
-      } catch(e) {
-        e.should.be.instanceOf(Error);
-        e.message.should.be.exactly('color 5 not defined');
-      }
+      var ix = sut.getColor(0);
+      ix.should.be.exactly(0);
+      ix = sut.getColor(1);
+      ix.should.be.exactly(1);
+      ix = sut.getColor(2);
+      ix.should.be.exactly(2);
+      ix = sut.getColor(3);
+      ix.should.be.exactly(3);
+      ix = sut.getColor(4);
+      ix.should.be.exactly(4);
     });
   });
 });

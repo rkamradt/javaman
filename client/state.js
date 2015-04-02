@@ -7,10 +7,10 @@ var fieldFactory = require('./field');
  var VIEWSIZE = 20;
  var SIZE = 20;
 
-module.exports = function(sound, ctx, controller) {
+module.exports = function(sound, ctx, squares, controller) {
   var users = [];
   var uid;
-  var field = fieldFactory(ctx, VIEWSIZE, SIZE);
+  var field = fieldFactory(ctx, VIEWSIZE, SIZE, squares);
   var maxx = 0;
   var maxy = 0;
 
