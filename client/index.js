@@ -9,8 +9,15 @@ var controllerFactory = require('./controller');
 $(document).ready(function() {
   var sounds = soundsFactory(new (window.AudioContext || window.webkitAudioContext)());
   var canvas = document.getElementById('canvas');
+  canvas.style.display='none';
+  var logon = document.getElementById('logon');
   var squares = document.getElementById('squares');
-  var ctx = canvas.getContext('2d');
-  var controller = controllerFactory(sounds, ctx, $.ajax, squares);
-  controller.init();
+  $("#logon").submit(function( event ) {
+    logon.style.display='none';
+    canvas.style.display='block';
+    var ctx = canvas.getContext('2d');
+    var controller = controllerFactory(sounds, ctx, $.ajax, squares);
+    controller.init();
+    event.preventDefault();
+  });
 });

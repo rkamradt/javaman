@@ -4,48 +4,94 @@
       <meta name='viewport' content='width=device-width,initial-scale=1.0'
       <link rel="stylesheet" href="css/bootstrap-theme.min.css">
       <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/javaman.css">
       <title>Java Man</title>
     </head>
     <body onkeydown='handler.keyDown(event)' onkeyup='handler.keyUp(event)'>
       <div class='container'>
-        <h1>Java Man</h1>
+        <div class="header clearfix">
+          <h3 class="text-muted">Java Man</h3>
+        </div>
+        <form id="logon" class="form-signin">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
         <canvas id="canvas" width='400' height='400'></canvas>
         <img id="squares" hidden src="img/squares.png">
-        <p>
-          <span class='btn btn-success btn-sm'
-            onmousedown='handler.actionStart(event, "up")'
-            onmouseup='handler.actionEnd(event, "up")'
-            ontouchstart='handler.actionStart(event, "up")'
-            ontouchend='handler.actionEnd(event, "up")'>UP</span>
-        </p>
-        <p>
-          <span class='btn btn-success btn-sm'
-            onmousedown='handler.actionStart(event, "left")'
-            onmouseup='handler.actionEnd(event, "left")'
-            ontouchstart='handler.actionStart(event, "left")'
-            ontouchend='handler.actionEnd(event, "left")'>LEFT</span>
-          <span class='btn btn-success btn-sm'
-            onmousedown='handler.actionStart(event, "right")'
-            onmouseup='handler.actionEnd(event, "right")'
-            ontouchstart='handler.actionStart(event, "right")'
-            ontouchend='handler.actionEnd(event, "right")'>RIGHT</span>
-        </p>
-        <p>
-          <span class='btn btn-success btn-sm'
-            onmousedown='handler.actionStart(event, "down")'
-            onmouseup='handler.actionEnd(event, "down")'
-            ontouchstart='handler.actionStart(event, "down")'
-            ontouchend='handler.actionEnd(event, "down")'>DOWN</span>
-        </p>
-        <p>
-          <span class='btn btn-success btn-sm'
-            onmousedown='handler.actionStart(event, "reset")'
-            ontouchstart='handler.actionEnd(event, "reset")'
-            >RESET</span>
-          <span class='btn btn-success btn-sm'
-            onmousedown='handler.actionStart(event, "stop")'
-            ontouchstart='handler.actionEnd(event, "stop")'>STOP</span>
-        </p>
+        <div class="row">
+          <div class="col-sm-4">
+            &nbsp;
+          </div>
+          <div class="col-sm-4">
+            <span id="upbutton" class='btn btn-success'
+              onmousedown='handler.actionStart(event, "up")'
+              onmouseup='handler.actionEnd(event, "up")'
+              ontouchstart='handler.actionStart(event, "up")'
+              ontouchend='handler.actionEnd(event, "up")'>UP</span>
+          </div>
+          <div class="col-sm-4">
+            &nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <span id="leftbutton" class='btn btn-success'
+              onmousedown='handler.actionStart(event, "left")'
+              onmouseup='handler.actionEnd(event, "left")'
+              ontouchstart='handler.actionStart(event, "left")'
+              ontouchend='handler.actionEnd(event, "left")'>LEFT</span>
+          </div>
+          <div class="col-sm-4">
+            &nbsp;
+          </div>
+          <div class="col-sm-4">
+            <span id="rightbutton" class='btn btn-success'
+              onmousedown='handler.actionStart(event, "right")'
+              onmouseup='handler.actionEnd(event, "right")'
+              ontouchstart='handler.actionStart(event, "right")'
+              ontouchend='handler.actionEnd(event, "right")'>RIGHT</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            &nbsp;
+          </div>
+          <div class="col-sm-4">
+            <span id="downbutton" class='btn btn-success'
+              onmousedown='handler.actionStart(event, "down")'
+              onmouseup='handler.actionEnd(event, "down")'
+              ontouchstart='handler.actionStart(event, "down")'
+              ontouchend='handler.actionEnd(event, "down")'>DOWN</span>
+          </div>
+          <div class="col-sm-4">
+            &nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <span id="resetbutton" class='btn btn-success'
+              onmousedown='handler.actionStart(event, "reset")'
+              ontouchstart='handler.actionEnd(event, "reset")'
+              >RESET</span>
+          </div>
+          <div class="col-sm-4">
+            &nbsp;
+          </div>
+          <div class="col-sm-4">
+            <span id="stopbutton" class='btn btn-success'
+              onmousedown='handler.actionStart(event, "stop")'
+              ontouchstart='handler.actionEnd(event, "stop")'>STOP</span>
+          </div>
+        </div>
       </div>
       <script src="js/index.js"></script>
       <!--script src="js/bootstrap.min.js"></script-->
