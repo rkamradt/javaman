@@ -34,7 +34,23 @@ module.exports = function(sounds, ctx, ajax, squares) {
         this.state = stateFactory(sounds, ctx, squares, this);
         this.server = serverFactory(ajax, this);
         this.handler = handlerFactory(this);
-        window.handler = this.handler; // export to global for html event binder
+        canvas.addEventListener("keydown", this.keyDown);
+        canvas.addEventListener("keyup", this.keyUp);
+        var button = document.getElementById('upbutton');
+        this.handler.bindButton(button,'up');
+        button = document.getElementById('leftbutton');
+        this.handler.bindButton(button,'left');
+        button = document.getElementById('rightbutton');
+        this.handler.bindButton(button,'right');
+        button = document.getElementById('downbutton');
+        this.handler.bindButton(button,'down');
+        button = document.getElementById('resetbutton');
+        this.handler.bindButton(button,'reset');
+        button = document.getElementById('stopbutton');
+        this.handler.bindButton(button,'stop');
+        button = document.getElementById('startbutton');
+        this.handler.bindButton(button,'start');
+
         this.server.createWorld();
       },
       'start': function() {

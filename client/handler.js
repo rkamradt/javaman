@@ -23,6 +23,22 @@ module.exports = function(controller) {
       e.preventDefault();
       controller.actionStart(command);
     },
+    'bindButton': function(button, command) {
+      var self = this;
+      button.addEventListener("mousedown", function(event) {
+        self.actionStart(event, command);
+      });
+      button.addEventListener("touchstart", function(event) {
+        self.actionStart(event, command);
+      });
+      button.addEventListener("mouseup", function(event) {
+        self.actionEnd(event, command);
+      });
+      button.addEventListener("touchend", function(event) {
+        self.actionEnd(event, command);
+      });
+
+    },
     '_xlateKey': function(key) {
       var command;
       switch(key) {

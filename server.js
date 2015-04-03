@@ -11,7 +11,8 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var expressSession = require('express-session');
-var gorouteFactory = require('./server/goroute');
+var worldRouteFactory = require('./server/goroute');
+var logonRouteFactory = require('./server/logonroute');
 
 app.set('port', process.env.PORT || 9999);
 
@@ -28,7 +29,8 @@ app.use(expressSession({
   resave: true
 }));
 
-app.use(gorouteFactory());
+app.use(worldRouteFactory());
+app.use(logonRouteFactory());
 
 http.createServer(app).listen(app.get('port'), function() {
  console.log('Server up: http://localhost:' + app.get('port'));
