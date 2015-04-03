@@ -25,18 +25,22 @@
           </div>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
-        <canvas id="canvas" width='400' height='400'></canvas>
+        <canvas id="canvas" width='240' height='240'></canvas>
         <img id="squares" hidden src="img/squares.png">
+      </div>
+      <div class="container">
         <div class="row">
           <div class="col-sm-4">
             &nbsp;
           </div>
           <div class="col-sm-4">
-            <span id="upbutton" class='btn btn-success'
-              onmousedown='handler.actionStart(event, "up")'
-              onmouseup='handler.actionEnd(event, "up")'
-              ontouchstart='handler.actionStart(event, "up")'
-              ontouchend='handler.actionEnd(event, "up")'>UP</span>
+            <button type="button" id="upbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "up")'
+                            onmouseup='handler.actionEnd(event, "up")'
+                            ontouchstart='handler.actionStart(event, "up")'
+                            ontouchend='handler.actionEnd(event, "up")'>
+              <span class="glyphicon glyphicon-chevron-up"/>
+            </button>
           </div>
           <div class="col-sm-4">
             &nbsp;
@@ -44,21 +48,25 @@
         </div>
         <div class="row">
           <div class="col-sm-4">
-            <span id="leftbutton" class='btn btn-success'
-              onmousedown='handler.actionStart(event, "left")'
-              onmouseup='handler.actionEnd(event, "left")'
-              ontouchstart='handler.actionStart(event, "left")'
-              ontouchend='handler.actionEnd(event, "left")'>LEFT</span>
+            <button type="button" id="leftbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "left")'
+                            onmouseup='handler.actionEnd(event, "left")'
+                            ontouchstart='handler.actionStart(event, "left")'
+                            ontouchend='handler.actionEnd(event, "left")'>
+              <span class="glyphicon glyphicon-chevron-left"/>
+            </button>
           </div>
           <div class="col-sm-4">
             &nbsp;
           </div>
           <div class="col-sm-4">
-            <span id="rightbutton" class='btn btn-success'
-              onmousedown='handler.actionStart(event, "right")'
-              onmouseup='handler.actionEnd(event, "right")'
-              ontouchstart='handler.actionStart(event, "right")'
-              ontouchend='handler.actionEnd(event, "right")'>RIGHT</span>
+            <button type="button" id="rightbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "right")'
+                            onmouseup='handler.actionEnd(event, "right")'
+                            ontouchstart='handler.actionStart(event, "right")'
+                            ontouchend='handler.actionEnd(event, "right")'>
+              <span class="glyphicon glyphicon-chevron-right"/>
+            </button>
           </div>
         </div>
         <div class="row">
@@ -66,11 +74,13 @@
             &nbsp;
           </div>
           <div class="col-sm-4">
-            <span id="downbutton" class='btn btn-success'
-              onmousedown='handler.actionStart(event, "down")'
-              onmouseup='handler.actionEnd(event, "down")'
-              ontouchstart='handler.actionStart(event, "down")'
-              ontouchend='handler.actionEnd(event, "down")'>DOWN</span>
+            <button type="button" id="downbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "down")'
+                            onmouseup='handler.actionEnd(event, "down")'
+                            ontouchstart='handler.actionStart(event, "down")'
+                            ontouchend='handler.actionEnd(event, "down")'>
+              <span class="glyphicon glyphicon-chevron-down"/>
+            </button>
           </div>
           <div class="col-sm-4">
             &nbsp;
@@ -78,18 +88,31 @@
         </div>
         <div class="row">
           <div class="col-sm-4">
-            <span id="resetbutton" class='btn btn-success'
-              onmousedown='handler.actionStart(event, "reset")'
-              ontouchstart='handler.actionEnd(event, "reset")'
-              >RESET</span>
+            <button type="button" id="resetbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "reset")'
+                            onmouseup='handler.actionEnd(event, "reset")'
+                            ontouchstart='handler.actionStart(event, "reset")'
+                            ontouchend='handler.actionEnd(event, "reset")'>
+              <span class="glyphicon glyphicon-refresh"/>
+            </button>
           </div>
           <div class="col-sm-4">
-            &nbsp;
+            <button type="button" id="stopbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "stop")'
+                            onmouseup='handler.actionEnd(event, "stop")'
+                            ontouchstart='handler.actionStart(event, "stop")'
+                            ontouchend='handler.actionEnd(event, "stop")'>
+              <span class="glyphicon glyphicon-stop"/>
+            </button>
           </div>
           <div class="col-sm-4">
-            <span id="stopbutton" class='btn btn-success'
-              onmousedown='handler.actionStart(event, "stop")'
-              ontouchstart='handler.actionEnd(event, "stop")'>STOP</span>
+            <button type="button" id="startbutton" class="btn btn-default"
+                            onmousedown='handler.actionStart(event, "start")'
+                            onmouseup='handler.actionEnd(event, "start")'
+                            ontouchstart='handler.actionStart(event, "start")'
+                            ontouchend='handler.actionEnd(event, "start")'>
+              <span class="glyphicon glyphicon-play"/>
+            </button>
           </div>
         </div>
       </div>
