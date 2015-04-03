@@ -32,9 +32,9 @@ body {
 }
 
 /* Customize container */
-@media (min-width: 400px) {
+@media (min-width: 320px) {
   .container {
-    max-width: 400px;
+    max-width: 320px;
   }
 }
 .container-narrow > hr {
@@ -60,7 +60,7 @@ body {
 }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 320px) {
   /* Remove the padding we set earlier */
   .header,
   .marketing,
@@ -76,4 +76,7 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+.btn span {
+
 }

@@ -4,7 +4,7 @@
  */
 var fieldFactory = require('./field');
 
- var VIEWSIZE = 20;
+ var VIEWSIZE = 16;
  var SIZE = 20;
 
 module.exports = function(sound, ctx, squares, controller) {
