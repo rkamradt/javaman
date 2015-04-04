@@ -17,7 +17,6 @@ var handleLogonSubmit = function(data) {
     success: function(data) {
       var sounds = soundsFactory(new (window.AudioContext || window.webkitAudioContext)());
       var canvas = document.getElementById('canvas');
-      canvas.style.display='none';
       var logon = document.getElementById('logon');
       var squares = document.getElementById('squares');
       logon.style.display='none';
@@ -25,7 +24,6 @@ var handleLogonSubmit = function(data) {
       var ctx = canvas.getContext('2d');
       var controller = controllerFactory(sounds, ctx, $.ajax, squares);
       controller.init();
-      event.preventDefault();
     }.bind(this),
     error: function(xhr, status, err) {
       console.error('/logon', status, err.toString());

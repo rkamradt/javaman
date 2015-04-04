@@ -5,7 +5,7 @@ module.exports = React.createClass({displayName: "Logon",
     e.preventDefault();
     var email = this.refs.email.getDOMNode().value.trim();
     var password = this.refs.password.getDOMNode().value.trim();
-    if (!email || !password) {
+    if (!email) {
       return;
     }
     this.props.onCommentSubmit({email: email, password: password});
@@ -29,7 +29,7 @@ module.exports = React.createClass({displayName: "Logon",
                                       ref: 'password',
                                       className: 'form-control',
                                       placeholder: 'Password',
-                                      required: true
+                                      required: false
                                       }),
         React.createElement("div", {className: 'checkbox'},
           React.createElement('label', {},
