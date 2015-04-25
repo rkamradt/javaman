@@ -14,7 +14,7 @@ var expressSession = require('express-session');
 var worldRouteFactory = require('./server/goroute');
 var logonRouteFactory = require('./server/logonroute');
 
-app.set('port', process.env.PORT || 9999);
+app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9999);
 
 app.use(bodyParser.urlencoded({extended: true}));
 
