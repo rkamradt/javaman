@@ -32,6 +32,10 @@ app.use(expressSession({
 app.use(worldRouteFactory());
 app.use(logonRouteFactory());
 
-http.createServer(app).listen(app.get('port'), function() {
+http.createServer(app).listen(app.get('port'), function(err) {
+ if(err) {
+   console.log('unable to start javaman on port ' + app.get('port'));
+   return;
+ }
  console.log('Server up: http://localhost:' + app.get('port'));
 });
