@@ -1,6 +1,7 @@
 var React = require('react');
+var createReactClass = require('create-react-class');
 
-module.exports = React.createClass({displayName: "Button",
+module.exports = createReactClass({displayName: "Button",
   render: function() {
     return (
       React.createElement("button", {id: this.props.buttonId, type: "button", className: "btn btn-default"},

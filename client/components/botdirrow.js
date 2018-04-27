@@ -1,7 +1,8 @@
 var React = require('react');
 var Button = require('./button.js');
+var createReactClass = require('create-react-class');
 
-module.exports = React.createClass({displayName: "BottomDirectionRow",
+module.exports = createReactClass({displayName: "BottomDirectionRow",
   render: function() {
     return (
       React.createElement("div", {className: "row"},

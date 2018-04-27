@@ -5,8 +5,9 @@ var BottomDirectionRow = require('./botdirrow');
 var ActionRow = require('./actionrow');
 var Header = require('./header');
 var Logon = require('./logon');
+var createReactClass = require('create-react-class');
 
-module.exports = React.createClass({displayName: "Screen",
+module.exports = createReactClass({displayName: "Screen",
   render: function() {
     return (
       React.createElement("div", {},

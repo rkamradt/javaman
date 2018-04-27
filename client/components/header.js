@@ -1,6 +1,7 @@
 var React = require('react');
+var createReactClass = require('create-react-class');
 
-module.exports = React.createClass({displayName: "Header",
+module.exports = createReactClass({displayName: "Header",
   render: function() {
     return (
       React.createElement("div", {className: "header clearfix"},

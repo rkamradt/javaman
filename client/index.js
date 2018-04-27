@@ -7,6 +7,7 @@ var soundsFactory = require('./sounds');
 var controllerFactory = require('./controller');
 var React = require('react');
 var Screen = require('./components/screen');
+var ReactDOM = require('react-dom');
 
 var handleLogonSubmit = function(data) {
   $.ajax({
@@ -32,7 +33,7 @@ var handleLogonSubmit = function(data) {
 };
 
 $(document).ready(function() {
-  React.render(
+  ReactDOM.render(
     React.createElement(Screen, {handleLogonSubmit: handleLogonSubmit}),
       document.getElementById('screen')
   );

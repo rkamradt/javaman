@@ -1,6 +1,7 @@
 var React = require('react');
+var createReactClass = require('create-react-class');
 
-module.exports = React.createClass({displayName: "Logon",
+module.exports = createReactClass({displayName: "Logon",
   handleSubmit: function(e) {
     e.preventDefault();
     var email = this.refs.email.getDOMNode().value.trim();
@@ -21,7 +22,7 @@ module.exports = React.createClass({displayName: "Logon",
                                       className: 'form-control',
                                       placeholder: 'Email address',
                                       required: true,
-                                      autofocus: true
+                                      autoFocus: true
                                       }),
         React.createElement("label", {htmlFor: 'inputPassword', className: 'sr-only'}, "Password"),
         React.createElement("input", {type: 'password',

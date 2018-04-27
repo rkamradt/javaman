@@ -32,13 +32,15 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "^4.1.0",
-    "popper.js": "^1.14.0",
+    "create-react-class": "^15.6.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "method-override": "^2.3.10",
     "morgan": "^1.9.0",
+    "popper.js": "^1.14.0",
     "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "should": "^13.2.1",
     "showdown": "^1.8.6"
   },
