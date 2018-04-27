@@ -4,7 +4,7 @@
   "description": "A multi-player find-the-easter-egg style game",
   "main": "server.js",
   "engines": {
-    "node": "0.10.x"
+    "node": "8.11.x"
   },
   "scripts": {
     "deploy": "./node_modules/.bin/grunt build",
@@ -30,28 +30,30 @@
   },
   "homepage": "https://github.com/rkamradt/javaman",
   "dependencies": {
-    "body-parser": "^1.4.3",
-    "bootstrap": "^3.3.4",
-    "browserify": "^9.0.3",
-    "express": "^4.4.5",
-    "express-session": "^1.10.4",
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.1.0",
+    "popper.js": "^1.14.0",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "jquery": "^3.3.1",
+    "method-override": "^2.3.10",
+    "morgan": "^1.9.0",
+    "react": "^16.3.2",
+    "should": "^13.2.1",
+    "showdown": "^1.8.6"
+  },
+  "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-browserify": "^3.5.0",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-express-server": "^0.4.19",
-    "grunt-react": "^0.12.0",
-    "grunt-simple-mocha": "^0.4.0",
-    "jquery": "^3.0.0",
-    "jshint": "^2.6.3",
-    "load-grunt-tasks": "^3.1.0",
-    "method-override": "^2.3.1",
-    "morgan": "^1.5.1",
-    "react": "^0.13.1",
-    "should": "^5.2.0",
-    "showdown": "^0.4.0"
+    "grunt-browserify": "^5.3.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.1",
+    "grunt-express-server": "^0.5.4",
+    "grunt-simple-mocha": "^0.4.1",
+    "jshint": "^2.9.5",
+    "browserify": "^15.2.0",
+    "load-grunt-tasks": "^3.5.2"
   }
 }
