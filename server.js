@@ -8,6 +8,7 @@ var fs = require('fs');
 var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
+var cors = require('cors');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var expressSession = require('express-session');
@@ -15,6 +16,8 @@ var worldRouteFactory = require('./server/goroute');
 var logonRouteFactory = require('./server/logonroute');
 
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9999);
+
+app.use(cors())
 
 app.use(bodyParser.urlencoded({extended: true}));
 

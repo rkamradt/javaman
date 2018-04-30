@@ -20,29 +20,30 @@ module.exports = function() {
     }
     switch(req.url) {
       case '/world':
-        res.send(field.createWorld(uid)).end();
+        res;
+        res.set('Content-Type', 'application/json').send(field.createWorld(uid)).end();
         return;
       case '/world/reset':
-        res.send(field.resetWorld()).end();
+        res.set('Content-Type', 'application/json').send(field.resetWorld()).end();
         return;
       case '/world/go':
-        res.send(field.getState()).end();
+        res.set('Content-Type', 'application/json').send(field.getState()).end();
         return;
       case '/world/go/up':
         field.move(uid, 'up');
-        res.send(field.getState()).end();
+        res.set('Content-Type', 'application/json').send(field.getState()).end();
         return;
       case '/world/go/down':
         field.move(uid, 'down');
-        res.send(field.getState()).end();
+        res.set('Content-Type', 'application/json').send(field.getState()).end();
         return;
       case '/world/go/right':
         field.move(uid, 'right');
-        res.send(field.getState()).end();
+        res.set('Content-Type', 'application/json').send(field.getState()).end();
         return;
       case '/world/go/left':
         field.move(uid, 'left');
-        res.send(field.getState()).end();
+        res.set('Content-Type', 'application/json').send(field.getState()).end();
         return;
     }
     next();
