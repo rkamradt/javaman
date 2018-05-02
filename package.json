@@ -7,11 +7,8 @@
     "node": "10.0.x"
   },
   "scripts": {
-    "deploy": "./node_modules/.bin/grunt build",
-    "start": "node --experimental-modules server.mjs",
-    "test": "./node_modules/.bin/grunt test"
+    "start": "node --experimental-modules server.mjs"
   },
-  "postinstall": "./node_modules/.bin/grunt build",
   "repository": {
     "type": "git",
     "url": "https://github.com/rkamradt/javaman.git"
@@ -44,15 +41,6 @@
     "showdown": "^1.8.6"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-clean": "^1.1.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-watch": "^1.0.1",
-    "grunt-express-server": "^0.5.4",
-    "grunt-simple-mocha": "^0.4.1",
-    "jshint": "^2.9.5",
-    "load-grunt-tasks": "^3.5.2"
+    "jshint": "^2.9.5"
   }
 }
