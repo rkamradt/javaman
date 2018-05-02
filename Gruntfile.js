@@ -43,7 +43,7 @@ module.exports = function(grunt) {
       },
       dev: {
           options: {
-            script: 'server.js'
+            script: 'server.mjs'
           }
       }
     },
@@ -52,41 +52,27 @@ module.exports = function(grunt) {
           curly: true,
           eqeqeq: true,
           eqnull: true,
-          browser: true,
-          globals: {
-            jQuery: true
-          },
+          esversion: '6'
         },
         files: {
-          src: ['Gruntfile.js', 'server.js' ]
+          src: ['Gruntfile.js', 'server.mjs' ]
         }
     },
     clean: {
-      build: {
-        src: [ 'dist' ]
-      },
       all: {
         src: ['node_modules']
       }
     },
-    copy: {
-      build: {
-        files: [
-          { expand: true, cwd: 'static/', src: '**', dest: 'dist/' },
-          { expand: true, cwd: 'node_modules/bootstrap/dist/', src: '**', dest: 'dist/' }
-        ]
-      }
-    },
     watch: {
       scripts: {
-        files: ['Gruntfile.js', 'server.js' ],
+        files: ['Gruntfile.js', 'server.mjs' ],
         tasks: ['jshint'],
         options: {
           interrupt: true,
         }
       },
       express: {
-        files:  [ 'server.js' ],
+        files:  [ 'server.mjs' ],
         tasks:  [ 'express:dev', 'simplemocha' ],
         options: {
           spawn: false
@@ -97,15 +83,6 @@ module.exports = function(grunt) {
         tasks: [ 'simplemocha' ],
         options: {
           interrupt: true,
-        }
-      }
-    },
-    browserify: {
-      client: {
-        src: ['client/index.js'],
-        dest: 'dist/js/index.js',
-        options: {
-          debug: true,
         }
       }
     },
@@ -123,7 +100,7 @@ module.exports = function(grunt) {
         }
     }
   });
-  grunt.registerTask('build', ['jshint', 'simplemocha', 'browserify', 'copy:build' ]);
+  grunt.registerTask('build', ['jshint', 'simplemocha' ]);
   grunt.registerTask('default', ['express:dev', 'watch']);
   grunt.registerTask('test', ['jshint', 'simplemocha' ]);
 

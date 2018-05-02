@@ -1,4 +1,4 @@
-module.exports = function() {
+export default function() {
   return function(req, res, next) {
     var uid = req.session.uid;
     if(isNaN(uid)) {

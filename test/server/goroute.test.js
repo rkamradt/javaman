@@ -2,8 +2,8 @@
  * Copyright 2015 randalkamradt.
  *
  */
-var goRouteFactory = require('../../server/goroute');
-var fieldFactory = require('../../server/field');
+var goRouteFactory = require('../../server/goroute.mjs');
+var fieldFactory = require('../../server/field.mjs');
 var should = require('should');
 
 var field = fieldFactory();

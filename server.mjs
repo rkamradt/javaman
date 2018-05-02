@@ -2,22 +2,25 @@
  * Copyright 2015 randalkamradt.
  *
  */
-var express = require('express');
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
-var app = express();
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var methodOverride = require('method-override');
-var morgan = require('morgan');
-var expressSession = require('express-session');
-var worldRouteFactory = require('./server/goroute');
-var logonRouteFactory = require('./server/logonroute');
+import express from 'express';
+import http from 'http';
+import fs from 'fs';
+import url from 'url';
+import path from 'path';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import methodOverride from 'method-override';
+import morgan from 'morgan';
+import expressSession from 'express-session';
+import worldRouteFactory from './server/goroute.mjs';
+import logonRouteFactory from './server/logonroute.mjs';
+
+const app = express();
+const __dirname = path.dirname(new url.URL(import.meta.url).pathname);
 
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9999);
 
-app.use(cors())
+app.use(cors());
 
 app.use(bodyParser.urlencoded({extended: true}));
 

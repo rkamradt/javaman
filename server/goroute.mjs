@@ -2,11 +2,11 @@
  * Copyright 2015 randalkamradt.
  *
  */
-var fieldFactory = require('./field');
+import Field from './field';
 
-module.exports = function() {
+export default function() {
   var users = [];
-  var field = fieldFactory();
+  var field = new Field();
   return function(req, res, next) {
     var uid = req.session.uid;
     if(isNaN(uid)) {
@@ -20,7 +20,6 @@ module.exports = function() {
     }
     switch(req.url) {
       case '/world':
-        res;
         res.set('Content-Type', 'application/json').send(field.createWorld(uid)).end();
         return;
       case '/world/reset':

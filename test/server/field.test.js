@@ -2,7 +2,7 @@
  * Copyright 2015 randalkamradt.
  *
  */
-var fieldFactory = require('../../server/field');
+var fieldFactory = require('../../server/field.mjs');
 var should = require('should');
 
 describe('creation and manipulation of field and user', function() {
