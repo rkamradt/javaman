@@ -17,10 +17,14 @@ import logonRouteFactory from './server/logonroute.mjs';
 
 const app = express();
 const __dirname = path.dirname(new url.URL(import.meta.url).pathname);
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+};
 
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9999);
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({extended: true}));
 

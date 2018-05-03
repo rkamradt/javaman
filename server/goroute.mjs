@@ -3,21 +3,25 @@
  *
  */
 import Field from './field';
+import uuidv1 from 'uuid/v1';
 
 export default function() {
-  var users = [];
-  var field = new Field();
+  const users = [];
+  const field = new Field();
   return function(req, res, next) {
-    var uid = req.session.uid;
-    if(isNaN(uid)) {
-      req.session.uuid = Math.floor(Math.random()*1000000);
-      uid = req.session.uid = field.addUser(req.session.uuid);
+    console.log("session.uuid = " + req.session.uuid);
+    if(isNaN(req.session.uid)) {
+      req.session.uuid = uuidv1();
+      req.session.uid = field.addUser(req.session.uuid);
+      console.log("new session uid = " + req.session.uid);
     } else {
-      if(!field.validateUser(uid, req.session.uuid)) {
-        req.session.uuid = Math.floor(Math.random()*1000000);
-        uid = req.session.uid = field.addUser(req.session.uuid);
+      if(!field.validateUser(req.session.uid, req.session.uuid)) {
+        req.session.uuid = uuidv1();
+        req.session.uid = field.addUser(req.session.uuid);
+        console.log("replase session, invalid user uid = " + req.session.uid);
       }
     }
+    const uid = req.session.uid;
     switch(req.url) {
       case '/world':
         res.set('Content-Type', 'application/json').send(field.createWorld(uid)).end();

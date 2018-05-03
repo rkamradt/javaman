@@ -2,13 +2,14 @@
  * Copyright 2015 randalkamradt.
  *
  */
+ const MAXY = 100;
+ const MAXX = 100;
+
  export default class Field {
 
   constructor() {
     this.users = [];
     this.field = [];
-    this.MAXY = 100;
-    this.MAXX = 100;
   }
   addUser(session) {
     this.users.push({
@@ -19,7 +20,7 @@
     return this.users.length-1;
   }
   validateUser(uid, session) {
-    return uid < 0 || uid >= users.length ||
+    return uid < 0 || uid >= this.users.length ||
       this.users[uid].session !== this.session;
   }
   resetWorld() {
@@ -30,9 +31,9 @@
     };
   }
   createWorld(uid) {
-    for(var x = 0; x < this.MAXX; x++) {
+    for(var x = 0; x < MAXX; x++) {
       this.field.push([]);
-      for(var y = 0; y < this.MAXY; y++) {
+      for(var y = 0; y < MAXY; y++) {
         this.field[x].push(Math.floor(Math.random()*4));
       }
     }
@@ -49,13 +50,13 @@
   moveTo(uid, x, y) {
     if(x < 0) {
       x = 0;
-    } else if(x >= this.MAXX) {
-      x = this.MAXX-1;
+    } else if(x >= MAXX) {
+      x = MAXX-1;
     }
     if(y < 0) {
       y = 0;
-    } else if(y >= this.MAXY) {
-      y = this.MAXY-1;
+    } else if(y >= MAXY) {
+      y = MAXY-1;
     }
     this.users[uid].cursorx = x;
     this.users[uid].previousx = x;
@@ -67,13 +68,13 @@
     var y = this.users[uid].cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0));
     if(x < 0) {
       x = 0;
-    } else if(x >= this.MAXX) {
-      x = this.MAXX-1;
+    } else if(x >= MAXX) {
+      x = MAXX-1;
     }
     if(y < 0) {
       y = 0;
-    } else if(y >= this.MAXY) {
-      y = this.MAXY-1;
+    } else if(y >= MAXY) {
+      y = MAXY-1;
     }
     this.users[uid].cursorx = x;
     this.users[uid].cursory = y;
