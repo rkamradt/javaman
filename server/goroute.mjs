@@ -6,7 +6,6 @@ import Field from './field';
 import uuidv1 from 'uuid/v1';
 
 export default function() {
-  const users = [];
   const field = new Field();
   return function(req, res, next) {
     console.log("session.uuid = " + req.session.uuid);
