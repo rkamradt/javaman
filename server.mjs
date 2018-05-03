@@ -22,13 +22,12 @@ const corsOptions = {
   credentials: true
 };
 
-app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 9999);
+app.set('port', process.env.PORT || 9999);
 
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/', express.static(path.join(__dirname, 'dist')));
  // parse application/json
 app.use(bodyParser.json());
 app.use(methodOverride());

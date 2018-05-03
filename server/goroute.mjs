@@ -18,7 +18,7 @@ export default function() {
       if(!field.validateUser(req.session.uid, req.session.uuid)) {
         req.session.uuid = uuidv1();
         req.session.uid = field.addUser(req.session.uuid);
-        console.log("replase session, invalid user uid = " + req.session.uid);
+        console.log("replace session, invalid user uid = " + req.session.uid);
       }
     }
     const uid = req.session.uid;
