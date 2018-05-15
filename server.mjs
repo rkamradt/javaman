@@ -14,7 +14,7 @@ import morgan from 'morgan'
 import expressSession from 'express-session'
 import WorldRoute from './server/worldroute.mjs'
 import World from './server/world.mjs'
-import logonRouteFactory from './server/logonroute.mjs'
+import userroute from './server/userroute';
 import User from './model/User.mjs'
 
 import passport from 'passport'
@@ -68,7 +68,13 @@ passport.serializeUser((user, done) =>  done(null, user.id))
 passport.deserializeUser((id, done) => User.findById(id, (err, user) => done(err, user)))
 
 app.use(worldRoute.route.bind(worldRoute))
-app.use(logonRouteFactory())
+
+app.post('/logon', passport.authenticate('local'), (req, res) => res.send(JSON.stringify(req.user)).end())
+app.get('/logout', (req, res) => {
+  req.logout()
+  res.status(200).end()
+})
+app.use('/user', userroute);
 
 http.createServer(app).listen(app.get('port'), err => {
  if(err) return console.log('unable to start javaman on port ' + app.get('port'))

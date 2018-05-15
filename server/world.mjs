@@ -12,20 +12,22 @@
     this.field = [];
   }
   addUser(session) {
+    const uid = this.users.length;
     this.users.push({
-      sessionid: this.session,
+      sessionid: session,
       cursorx: 0,
       cursory: 0,
+      uid: uid,
     });
-    return this.users.length-1;
+    return uid;
   }
   validateUser(uid, session) {
-    console.log("users length = " + users.length);
+    console.log("users length = " + this.users.length);
     console.log("uid = " + uid);
     console.log("session = " + session);
-    console.log("user session = " + this.users[uid].session);
+    console.log("user session = " + this.users[uid].sessionid);
     return uid < 0 || uid >= this.users.length ||
-      this.users[uid].session !== this.session;
+      this.users[uid].sessionid !== this.session;
   }
   resetWorld() {
     this.field = [];

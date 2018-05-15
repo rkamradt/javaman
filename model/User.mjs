@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt-nodejs'
+import theUserLookup from '../server/userlookup';
 
 
 export default class User {
@@ -10,11 +11,11 @@ export default class User {
    this.password = bcrypt.hashSync(password);
  }
 
- findById(id, done) {
-   // TODO:
+ static findById(id, done) {
+   theUserLookup.findById(id, done);
  }
  save(done) {
-   // TODO:
+   theUserLookup.save(this, done);
  }
 
  validPassword(password) {
