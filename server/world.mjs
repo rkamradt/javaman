@@ -5,7 +5,7 @@
  const MAXY = 100;
  const MAXX = 100;
 
- export default class Field {
+ export default class World {
 
   constructor() {
     this.users = [];
@@ -20,6 +20,10 @@
     return this.users.length-1;
   }
   validateUser(uid, session) {
+    console.log("users length = " + users.length);
+    console.log("uid = " + uid);
+    console.log("session = " + session);
+    console.log("user session = " + this.users[uid].session);
     return uid < 0 || uid >= this.users.length ||
       this.users[uid].session !== this.session;
   }
@@ -62,6 +66,7 @@
     this.users[uid].previousx = x;
     this.users[uid].cursory = y;
     this.users[uid].previousy = y;
+    return this.getState();
   }
   move(uid,direction) {
     var x = this.users[uid].cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0));
@@ -78,6 +83,7 @@
     }
     this.users[uid].cursorx = x;
     this.users[uid].cursory = y;
+    return this.getState();
   }
 
 }

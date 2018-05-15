@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/rkamradt/javaman",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.3",
@@ -37,6 +38,8 @@
     "method-override": "^2.3.10",
     "morgan": "^1.9.0",
     "npm": "^6.0.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "popper.js": "^1.14.0",
     "should": "^13.2.1",
     "showdown": "^1.8.6",
