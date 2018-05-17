@@ -24,6 +24,7 @@ export default class WorldRoute {
         console.log("replace session, invalid user, new uid = " + req.session.uid)
       }
     }
+    return req.session.uid
   }
   route(req, res, next) {
     switch(req.url) {
