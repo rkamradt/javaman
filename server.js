@@ -49,7 +49,8 @@ app.use(express.urlencoded({ extended: false }))
 app.get('/users', authenticationRequired, (req, res) => {
   res.json(req.jwt);
 })
-app.use(worldRoute.route.bind(worldRoute))
+
+app.use('/api', authenticationRequired, worldRoute.route.bind(worldRoute))
 
 const { PORT = 3001 } = process.env
 

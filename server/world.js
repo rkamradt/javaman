@@ -11,23 +11,15 @@
     this.users = [];
     this.field = [];
   }
-  addUser(session) {
+  addUser(jwt) {
     const uid = this.users.length;
     this.users.push({
-      sessionid: session,
+      sessionid: jwt,
       cursorx: 0,
       cursory: 0,
       uid: uid,
     });
     return uid;
-  }
-  validateUser(uid, session) {
-    console.log("users length = " + this.users.length);
-    console.log("uid = " + uid);
-    console.log("session = " + session);
-    console.log("user session = " + this.users[uid].sessionid);
-    return uid < 0 || uid >= this.users.length ||
-      this.users[uid].sessionid !== this.session;
   }
   resetWorld() {
     this.field = [];

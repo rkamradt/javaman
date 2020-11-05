@@ -2,29 +2,19 @@
  * Copyright 2015 randalkamradt.
  *
  */
-import { v4 as uuidv4 } from 'uuid';
-
 export default class WorldRoute {
 
  constructor(world) {
     this.world = world
+    this.uids = [];
   }
   getUid(req) {
-    console.log("session.uuid = " + req.session.uuid)
-    console.log("session.uid = " + req.session.uid)
-    if(isNaN(req.session.uid)) {
-      req.session.uuid = uuidv4();
-      req.session.uid = this.world.addUser(req.session.uuid)
-      console.log("new session uid = " + req.session.uid)
-      console.log("new session uuid = " + req.session.uuid)
-    } else {
-      if(!this.world.validateUser(req.session.uid, req.session.uuid)) {
-        req.session.uuid = uuidv1()
-        req.session.uid = this.world.addUser(req.session.uuid)
-        console.log("replace session, invalid user, new uid = " + req.session.uid)
-      }
+    console.log("jwt = " + req.jwt)
+    if (!this.uids[req.jwt]) {
+      this.uids[req.jwt] = this.world.addUser(req.jwt)
     }
-    return req.session.uid
+    console.log("uid = " + this.uids[req.jwt])
+    return this.uids[req.jwt]
   }
   route(req, res, next) {
     switch(req.url) {
