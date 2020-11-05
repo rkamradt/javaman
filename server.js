@@ -4,6 +4,8 @@
  */
 import express from 'express'
 import cors from 'cors'
+var morgan = require('morgan')
+var cookieParser = require('cookie-parser')
 import WorldRoute from './server/worldroute.js'
 import World from './server/world.js'
 const OktaJwtVerifier = require('@okta/jwt-verifier')
@@ -18,6 +20,7 @@ const oktaJwtVerifier = new OktaJwtVerifier({
  * if the token is not present or fails validation.  If the token is valid its
  * contents are attached to req.jwt
  */
+var jwtCache = [];
 function authenticationRequired(req, res, next) {
   const authHeader = req.headers.authorization || ''
   const match = authHeader.match(/Bearer (.+)/)
@@ -28,13 +31,24 @@ function authenticationRequired(req, res, next) {
   }
 
   const accessToken = match[1];
+  console.log('looking up accessToken in cache ' + accessToken)
+  const jwt = jwtCache[accessToken]
+  if(jwt) {
+    req.jwt = jwt;
+    console.log('jwt found in cache ' + jwt);
+    next()
+  }
+  console.log('verifying accessToken')
   const audience = 'api://default'
   return oktaJwtVerifier.verifyAccessToken(accessToken, audience)
     .then((jwt) => {
       req.jwt = jwt
+      jwtCache[accessToken] = jwt
+      console.log('verifyed accessToken ' + jwt)
       next()
     })
     .catch((err) => {
+      console.log('error verifying token ' + err)
       res.status(401).send(err.message)
     })
 }
@@ -42,9 +56,20 @@ function authenticationRequired(req, res, next) {
 var app = express()
 const worldRoute = new WorldRoute(new World())
 
+app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.use(morgan('dev'))
+app.use((req, res, next) => {
+  console.log('Cookies: ', req.cookies)
+
+  // Cookies that have been signed
+  console.log('Signed Cookies: ', req.signedCookies)
+  console.log('headers ', req.headers)
+  next();
+})
 
 app.get('/users', authenticationRequired, (req, res) => {
   res.json(req.jwt);
