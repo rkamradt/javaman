@@ -51,6 +51,6 @@ app.get('/users', authenticationRequired, (req, res) => {
 })
 app.use(worldRoute.route.bind(worldRoute))
 
-const { PORT = 3000 } = process.env
+const { PORT = 3001 } = process.env
 
 app.listen(PORT, () => console.log(`javaman listening on port ${PORT}!`))
