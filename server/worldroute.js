@@ -2,7 +2,7 @@
  * Copyright 2015 randalkamradt.
  *
  */
-import uuidv1 from 'uuid/v1'
+import { v4 as uuidv4 } from 'uuid';
 
 export default class WorldRoute {
 
@@ -13,7 +13,7 @@ export default class WorldRoute {
     console.log("session.uuid = " + req.session.uuid)
     console.log("session.uid = " + req.session.uid)
     if(isNaN(req.session.uid)) {
-      req.session.uuid = uuidv1();
+      req.session.uuid = uuidv4();
       req.session.uid = this.world.addUser(req.session.uuid)
       console.log("new session uid = " + req.session.uid)
       console.log("new session uuid = " + req.session.uuid)

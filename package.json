@@ -2,12 +2,12 @@
   "name": "javaman",
   "version": "0.0.0",
   "description": "A multi-player find-the-easter-egg style game",
-  "main": "server.mjs",
+  "main": "index.js",
   "engines": {
-    "node": "10.0.x"
+    "node": "14.4.x"
   },
   "scripts": {
-    "start": "node --experimental-modules server.mjs"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -30,21 +30,19 @@
   },
   "homepage": "https://github.com/rkamradt/javaman",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.18.2",
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "ioredis": "^3.2.2",
-    "method-override": "^2.3.10",
-    "morgan": "^1.9.0",
-    "npm": "^6.0.0",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "popper.js": "^1.14.0",
-    "should": "^13.2.1",
-    "showdown": "^1.8.6",
-    "uuid": "^3.2.1"
+    "@okta/jwt-verifier": "^1.0.0",
+    "@okta/oidc-middleware": "^2.0.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "http": "0.0.1-security",
+    "http-errors": "^1.8.0",
+    "morgan": "^1.10.0",
+    "njwt": "^1.0.0",
+    "nnode": "^0.3.3"
   },
   "devDependencies": {
     "jshint": "^2.9.5"
