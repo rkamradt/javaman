@@ -17,7 +17,8 @@
       sessionid: jwt,
       cursorx: 0,
       cursory: 0,
-      uid: uid,
+      uid: jwt.uid,
+      userId: jwt.sub
     });
     return uid;
   }
@@ -29,15 +30,18 @@
     };
   }
   createWorld(uid) {
-    for(var x = 0; x < MAXX; x++) {
-      this.field.push([]);
-      for(var y = 0; y < MAXY; y++) {
-        this.field[x].push(Math.floor(Math.random()*4));
+    if(this.field.length == 0) {
+      for(var x = 0; x < MAXX; x++) {
+        this.field.push([]);
+        for(var y = 0; y < MAXY; y++) {
+          this.field[x].push(Math.floor(Math.random()*4));
+        }
       }
     }
     return {
       'world': this.field,
-      'uid': uid
+      'uid': uid,
+      'users': this.users
     };
   }
   getState() {

@@ -34,7 +34,6 @@ function authenticationRequired(req, res, next) {
   return oktaJwtVerifier.verifyAccessToken(accessToken, audience)
     .then((jwt) => {
       req.jwt = jwt
-      console.log('verified jwt ', jwt)
       next()
     })
     .catch((err) => {
@@ -52,10 +51,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use(morgan('dev'))
-
-app.get('/users', authenticationRequired, (req, res) => {
-  res.json(req.jwt);
-})
 
 app.use('/api', authenticationRequired, worldRoute.route.bind(worldRoute))
 
