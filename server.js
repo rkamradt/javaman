@@ -20,7 +20,6 @@ const oktaJwtVerifier = new OktaJwtVerifier({
  * if the token is not present or fails validation.  If the token is valid its
  * contents are attached to req.jwt
  */
-var jwtCache = [];
 function authenticationRequired(req, res, next) {
   const authHeader = req.headers.authorization || ''
   const match = authHeader.match(/Bearer (.+)/)
@@ -31,20 +30,11 @@ function authenticationRequired(req, res, next) {
   }
 
   const accessToken = match[1];
-  console.log('looking up accessToken in cache ' + accessToken)
-  const jwt = jwtCache[accessToken]
-  if(jwt) {
-    req.jwt = jwt;
-    console.log('jwt found in cache ' + jwt);
-    next()
-  }
-  console.log('verifying accessToken')
   const audience = 'api://default'
   return oktaJwtVerifier.verifyAccessToken(accessToken, audience)
     .then((jwt) => {
       req.jwt = jwt
-      jwtCache[accessToken] = jwt
-      console.log('verifyed accessToken ' + jwt)
+      console.log('verified jwt ', jwt)
       next()
     })
     .catch((err) => {
@@ -62,14 +52,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use(morgan('dev'))
-app.use((req, res, next) => {
-  console.log('Cookies: ', req.cookies)
-
-  // Cookies that have been signed
-  console.log('Signed Cookies: ', req.signedCookies)
-  console.log('headers ', req.headers)
-  next();
-})
 
 app.get('/users', authenticationRequired, (req, res) => {
   res.json(req.jwt);
