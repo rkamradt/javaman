@@ -16,7 +16,7 @@ const MAXX = 100;
       cursorx: 0,
       previousx: 0,
       cursory: 0,
-      previousy: 0;
+      previousy: 0,
       uid: jwt.claims.uid,
       userId: jwt.claims.sub
     }
