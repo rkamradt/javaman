@@ -55,7 +55,7 @@ const MAXX = 100;
     }
   }
   moveTo(uid, x, y) {
-    user = this.users[uid]
+    const user = this.users[uid]
     if(!user) {
       return {
         'error': 'unknown user ' + uid,
@@ -79,7 +79,7 @@ const MAXX = 100;
     return this.getState()
   }
   move(uid,direction) {
-    user = this.users[uid]
+    const user = this.users[uid]
     if(!user) {
       return {
         'error': 'unknown user ' + uid,
