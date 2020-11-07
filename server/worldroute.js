@@ -22,14 +22,12 @@ export default class WorldRoute {
   removeUid(req) {
     var uid = req.jwt.claims.uid
     var sub = req.jwt.claims.sub;
-    var ret = this.uids[uid]
-    console.log('checking uid ' + uid)
     if (this.uids[uid]) {
       console.log("removing user for " + sub)
-      this.uids[uid] = this.world.addUser(req.jwt)
+      this.uids[uid] = null;
     }
-    console.log('logging out for uid ' + this.uids[uid])
-    return ret
+    console.log('logging out for uid ' + uid)
+    return uid
   }
   route(req, res, next) {
     switch(req.url) {
