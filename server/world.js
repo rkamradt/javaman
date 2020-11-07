@@ -21,6 +21,10 @@
     });
     return uid;
   }
+  logoff(uid) {
+    this.users.splice(uid,1)
+    return this.getState();
+  }
   resetWorld() {
     this.field = [];
     return {

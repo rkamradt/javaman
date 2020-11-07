@@ -27,6 +27,9 @@ export default class WorldRoute {
       case '/world/reset':
         res.set('Content-Type', 'application/json').send(this.world.resetWorld()).end()
         return;
+      case '/world/logoff':
+        res.set('Content-Type', 'application/json').send(this.world.logoff(this.getUid(req))).end()
+        return;
       case '/world/go':
         res.set('Content-Type', 'application/json').send(this.world.getState()).end()
         return;
