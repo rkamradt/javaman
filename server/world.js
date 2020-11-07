@@ -50,6 +50,7 @@ const MAXX = 100;
     };
   }
   getState() {
+    console.log('returning state', this.users)
     return {
       'users': this.users
     }
