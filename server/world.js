@@ -16,6 +16,7 @@
     if(this.users.length > 0) {
       uid = this.users[this.users.length-1] + 1
     }
+    this.users.push(uid)
     this.users[uid] = {
       cursorx: 0,
       cursory: 0,
