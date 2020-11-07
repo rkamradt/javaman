@@ -2,8 +2,8 @@
  * Copyright 2015 randalkamradt.
  *
  */
- const MAXY = 100;
- const MAXX = 100;
+const MAXY = 100;
+const MAXX = 100;
 
  export default class World {
 
@@ -12,21 +12,15 @@
     this.field = [];
   }
   addUser(jwt) {
-    var uid = 0;
-    if(this.users.length > 0) {
-      uid = this.users[this.users.length-1] + 1
-    }
-    this.users.push(uid)
-    this.users[uid] = {
+    this.users[jwt.claims.uid] = {
       cursorx: 0,
       cursory: 0,
       uid: jwt.claims.uid,
       userId: jwt.claims.sub
     }
-    return uid
   }
   logoff(uid) {
-    this.users.splice(uid,1)
+    this.users[uid] = null
     return this.getState()
   }
   resetWorld() {

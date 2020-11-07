@@ -16,8 +16,8 @@ export default class WorldRoute {
       console.log("creating new user for " + sub)
       this.uids[uid] = this.world.addUser(req.jwt)
     }
-    console.log('routing for uid ' + this.uids[uid])
-    return this.uids[uid]
+    console.log('routing for uid ' + uid)
+    return uid
   }
   removeUid(req) {
     var uid = req.jwt.claims.uid
