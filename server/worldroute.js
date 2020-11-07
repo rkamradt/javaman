@@ -19,6 +19,18 @@ export default class WorldRoute {
     console.log('routing for uid ' + this.uids[uid])
     return this.uids[uid]
   }
+  removeUid(req) {
+    var uid = req.jwt.claims.uid
+    var sub = req.jwt.claims.sub;
+    var ret = this.uids[uid]
+    console.log('checking uid ' + uid)
+    if (this.uids[uid]) {
+      console.log("removing user for " + sub)
+      this.uids[uid] = this.world.addUser(req.jwt)
+    }
+    console.log('logging out for uid ' + this.uids[uid])
+    return ret
+  }
   route(req, res, next) {
     switch(req.url) {
       case '/world':
@@ -28,7 +40,7 @@ export default class WorldRoute {
         res.set('Content-Type', 'application/json').send(this.world.resetWorld()).end()
         return;
       case '/world/logoff':
-        res.set('Content-Type', 'application/json').send(this.world.logoff(this.getUid(req))).end()
+        res.set('Content-Type', 'application/json').send(this.world.logoff(this.removeUid(req))).end()
         return;
       case '/world/go':
         res.set('Content-Type', 'application/json').send(this.world.getState()).end()
