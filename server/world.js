@@ -14,7 +14,9 @@ const MAXX = 100;
   addUser(jwt) {
     this.users[jwt.claims.uid] = {
       cursorx: 0,
+      previousx: 0,
       cursory: 0,
+      previousy: 0;
       uid: jwt.claims.uid,
       userId: jwt.claims.sub
     }
@@ -25,7 +27,8 @@ const MAXX = 100;
     return this.getState()
   }
   resetWorld() {
-    this.field = [];
+    this.field = []
+    this.users = []
     return {
       'world': this.field,
       'uid': -1
@@ -36,7 +39,7 @@ const MAXX = 100;
       for(var x = 0; x < MAXX; x++) {
         this.field.push([]);
         for(var y = 0; y < MAXY; y++) {
-          this.field[x].push(Math.floor(Math.random()*4));
+          this.field[x].push(Math.floor(Math.random()*4))
         }
       }
     }
@@ -52,7 +55,8 @@ const MAXX = 100;
     }
   }
   moveTo(uid, x, y) {
-    if(!this.users[uid]) {
+    user = this.users[uid]
+    if(!user) {
       return {
         'error': 'unknown user ' + uid,
         'users': this.users
@@ -68,22 +72,22 @@ const MAXX = 100;
     } else if(y >= MAXY) {
       y = MAXY-1;
     }
-    this.users[uid].cursorx = x
-    this.users[uid].previousx = x
-    this.users[uid].cursory = y
-    this.users[uid].previousy = y
+    user.cursorx = x
+    user.previousx = x
+    user.cursory = y
+    tuser.previousy = y
     return this.getState()
   }
   move(uid,direction) {
-    if(!this.users[uid]) {
+    user = this.users[uid]
+    if(!user) {
       return {
         'error': 'unknown user ' + uid,
         'users': this.users
-
       }
     }
-    var x = this.users[uid].cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0))
-    var y = this.users[uid].cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0))
+    var x = user.cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0))
+    var y = user.cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0))
     if(x < 0) {
       x = 0;
     } else if(x >= MAXX) {
@@ -94,8 +98,8 @@ const MAXX = 100;
     } else if(y >= MAXY) {
       y = MAXY-1;
     }
-    this.users[uid].cursorx = x
-    this.users[uid].cursory = y
+    user.cursorx = x
+    user.cursory = y
     return this.getState();
   }
 
