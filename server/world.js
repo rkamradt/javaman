@@ -18,6 +18,7 @@ const MAXX = 100;
       uid: jwt.claims.uid,
       userId: jwt.claims.sub
     }
+    console.log("users = ", users)
   }
   logoff(uid) {
     this.users[uid] = null
