@@ -14,11 +14,10 @@
   addUser(jwt) {
     const uid = this.users.length;
     this.users.push({
-      sessionid: jwt,
       cursorx: 0,
       cursory: 0,
-      uid: jwt.uid,
-      userId: jwt.sub
+      uid: jwt.claims.uid,
+      userId: jwt.claims.sub
     });
     return uid;
   }

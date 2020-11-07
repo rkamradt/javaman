@@ -9,13 +9,15 @@ export default class WorldRoute {
     this.uids = [];
   }
   getUid(req) {
-    console.log('checking jwt ' + req.jwt)
-    if (!this.uids[req.jwt]) {
-      console.log("creating new user ", req.jwt)
-      this.uids[req.jwt.uid] = this.world.addUser(req.jwt)
+    var uid = req.jwt.claims.uid
+    var sub = req.jwt.claims.sub;
+    console.log('checking uid ' + uid)
+    if (!this.uids[uid]) {
+      console.log("creating new user for " + sub)
+      this.uids[uid] = this.world.addUser(req.jwt)
     }
-    console.log('routing for uid ' + this.uids[req.jwt.uid])
-    return this.uids[req.jwt.uid]
+    console.log('routing for uid ' + this.uids[uid])
+    return this.uids[uid]
   }
   route(req, res, next) {
     switch(req.url) {
