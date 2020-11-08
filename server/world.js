@@ -8,7 +8,7 @@ const MAXX = 100;
  export default class World {
 
   constructor() {
-    this.users = [];
+    this.users = new Map();
     this.field = [];
   }
   addUser(jwt) {
@@ -20,18 +20,19 @@ const MAXX = 100;
       uid: jwt.claims.uid,
       userId: jwt.claims.sub
     }
-    console.log("users = ", this.users)
+    console.log("add user = ", this.users)
   }
   logoff(uid) {
-    this.users[uid] = null
+    this.users.delete(uid)
     return this.getState()
   }
   resetWorld() {
     this.field = []
-    this.users = []
+    this.users.clear()
     return {
       'world': this.field,
-      'uid': -1
+      'uid': -1,
+      'users': this.users
     }
   }
   createWorld(uid) {
@@ -43,25 +44,27 @@ const MAXX = 100;
         }
       }
     }
-    return {
+    const ret = JSON.stringify({
       'world': this.field,
       'uid': uid,
       'users': this.users
-    };
+    })
+    return ret;
   }
   getState() {
-    console.log('returning state', this.users)
-    return {
+    const ret = JSON.stringify({
       'users': this.users
-    }
+    })
+    return ret;
   }
   moveTo(uid, x, y) {
-    const user = this.users[uid]
+    const user = this.users.get(uid)
     if(!user) {
-      return {
-        'error': 'unknown user ' + uid,
+      const ret = JSON.stringify({
+        'error': 'user does not exist ' + uid,
         'users': this.users
-      }
+      })
+      return ret;
     }
     if(x < 0) {
       x = 0;
@@ -80,7 +83,7 @@ const MAXX = 100;
     return this.getState()
   }
   move(uid,direction) {
-    const user = this.users[uid]
+    const user = this.users.get(uid)
     if(!user) {
       return {
         'error': 'unknown user ' + uid,

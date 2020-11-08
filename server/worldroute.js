@@ -6,15 +6,15 @@ export default class WorldRoute {
 
  constructor(world) {
     this.world = world
-    this.uids = [];
+    this.uids = new Map();
   }
   getUid(req) {
     var uid = req.jwt.claims.uid
     var sub = req.jwt.claims.sub;
     console.log('checking uid ' + uid)
-    if (!this.uids[uid]) {
+    if (!this.uids.has(uid)) {
       console.log("creating new user for " + sub)
-      this.uids[uid] = this.world.addUser(req.jwt)
+      this.uids.set(uid, this.world.addUser(req.jwt))
     }
     console.log('routing for uid ' + uid)
     return uid
@@ -22,9 +22,9 @@ export default class WorldRoute {
   removeUid(req) {
     var uid = req.jwt.claims.uid
     var sub = req.jwt.claims.sub;
-    if (this.uids[uid]) {
+    if (this.uids.has(uid)) {
       console.log("removing user for " + sub)
-      this.uids[uid] = null;
+      this.uids.delete(uid);
     }
     console.log('logging out for uid ' + uid)
     return uid
