@@ -11,31 +11,39 @@ const MAXX = 100;
     this.users = new Map();
     this.field = [];
   }
-  addUser(jwt) {
-    this.users[jwt.claims.uid] = {
+  addUser(claims) {
+    this.users.set(claims.uid, {
       cursorx: 0,
       previousx: 0,
       cursory: 0,
       previousy: 0,
-      uid: jwt.claims.uid,
-      userId: jwt.claims.sub
-    }
-    console.log("add user = ", this.users)
+      uid: claims.uid,
+      userId: claims.sub
+    })
+    console.log('add user = ', claims)
   }
-  logoff(uid) {
-    this.users.delete(uid)
-    return this.getState()
+  logoff(claims) {
+    console.log('remove user ', claims)
+    this.users.delete(claims.uid)
+    return this.getState(claims)
   }
-  resetWorld() {
+  resetWorld(claims) {
+    console.log('remove all users by ', claims)
     this.field = []
     this.users.clear()
-    return {
+    const ret = {
       'world': this.field,
-      'uid': -1,
-      'users': this.users
+      'uid': claims.uid,
+      'user': claims.sub,
+      'users': Object.fromEntries(this.users)
     }
+    console.log('returning ' + ret)
+    return ret;
   }
-  createWorld(uid) {
+  createWorld(claims) {
+    if(!this.users.has(claims.uid)) {
+      this.addUser(claims)
+    }
     if(this.field.length == 0) {
       for(var x = 0; x < MAXX; x++) {
         this.field.push([]);
@@ -46,26 +54,27 @@ const MAXX = 100;
     }
     const ret = JSON.stringify({
       'world': this.field,
-      'uid': uid,
-      'users': this.users
+      'uid': claims.uid,
+      'user': claims.sub,
+      'users': Object.fromEntries(this.users)
     })
+    console.log('returning ' + ret)
     return ret;
   }
-  getState() {
+  getState(claims) {
     const ret = JSON.stringify({
-      'users': this.users
+      'uid': claims.uid,
+      'user': claims.sub,
+      'users': Object.fromEntries(this.users)
     })
+    console.log('returning ' + ret)
     return ret;
   }
-  moveTo(uid, x, y) {
-    const user = this.users.get(uid)
-    if(!user) {
-      const ret = JSON.stringify({
-        'error': 'user does not exist ' + uid,
-        'users': this.users
-      })
-      return ret;
+  moveTo(claims, x, y) {
+    if(!this.users.has(claims.uid)) {
+      this.addUser(claims)
     }
+    const user = this.users.get(claims.uid)
     if(x < 0) {
       x = 0;
     } else if(x >= MAXX) {
@@ -79,17 +88,14 @@ const MAXX = 100;
     user.cursorx = x
     user.previousx = x
     user.cursory = y
-    tuser.previousy = y
-    return this.getState()
+    user.previousy = y
+    return this.getState(claims)
   }
-  move(uid,direction) {
-    const user = this.users.get(uid)
-    if(!user) {
-      return {
-        'error': 'unknown user ' + uid,
-        'users': this.users
-      }
+  move(claims,direction) {
+    if(!this.users.has(claims.uid)) {
+      this.addUser(claims)
     }
+    const user = this.users.get(claims.uid)
     var x = user.cursorx + (direction === 'right' ? 1 : (direction === 'left' ? -1 : 0))
     var y = user.cursory + (direction === 'down' ? 1 : (direction === 'up' ? -1 : 0))
     if(x < 0) {
@@ -104,7 +110,7 @@ const MAXX = 100;
     }
     user.cursorx = x
     user.cursory = y
-    return this.getState();
+    return this.getState(claims);
   }
 
 }

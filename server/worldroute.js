@@ -6,54 +6,32 @@ export default class WorldRoute {
 
  constructor(world) {
     this.world = world
-    this.uids = new Map();
-  }
-  getUid(req) {
-    var uid = req.jwt.claims.uid
-    var sub = req.jwt.claims.sub;
-    console.log('checking uid ' + uid)
-    if (!this.uids.has(uid)) {
-      console.log("creating new user for " + sub)
-      this.uids.set(uid, this.world.addUser(req.jwt))
-    }
-    console.log('routing for uid ' + uid)
-    return uid
-  }
-  removeUid(req) {
-    var uid = req.jwt.claims.uid
-    var sub = req.jwt.claims.sub;
-    if (this.uids.has(uid)) {
-      console.log("removing user for " + sub)
-      this.uids.delete(uid);
-    }
-    console.log('logging out for uid ' + uid)
-    return uid
   }
   route(req, res, next) {
     switch(req.url) {
       case '/world':
-        res.set('Content-Type', 'application/json').send(this.world.createWorld(this.getUid(req))).end()
+        res.set('Content-Type', 'application/json').send(this.world.createWorld(req.jwt.claims)).end()
         return;
       case '/world/reset':
-        res.set('Content-Type', 'application/json').send(this.world.resetWorld()).end()
+        res.set('Content-Type', 'application/json').send(this.world.resetWorld(req.jwt.claims)).end()
         return;
       case '/world/logoff':
-        res.set('Content-Type', 'application/json').send(this.world.logoff(this.removeUid(req))).end()
+        res.set('Content-Type', 'application/json').send(this.world.logoff(req.jwt.claims)).end()
         return;
       case '/world/go':
-        res.set('Content-Type', 'application/json').send(this.world.getState()).end()
+        res.set('Content-Type', 'application/json').send(this.world.getState(req.jwt.claims)).end()
         return;
       case '/world/go/up':
-        res.set('Content-Type', 'application/json').send(this.world.move(this.getUid(req), 'up')).end()
+        res.set('Content-Type', 'application/json').send(this.world.move(req.jwt.claims, 'up')).end()
         return;
       case '/world/go/down':
-        res.set('Content-Type', 'application/json').send(this.world.move(this.getUid(req), 'down')).end()
+        res.set('Content-Type', 'application/json').send(this.world.move(req.jwt.claims, 'down')).end()
         return;
       case '/world/go/right':
-        res.set('Content-Type', 'application/json').send(this.world.move(this.getUid(req), 'right')).end()
+        res.set('Content-Type', 'application/json').send(this.world.move(req.jwt.claims, 'right')).end()
         return;
       case '/world/go/left':
-        res.set('Content-Type', 'application/json').send(this.world.move(this.getUid(req), 'left')).end()
+        res.set('Content-Type', 'application/json').send(this.world.move(req.jwt.claims, 'left')).end()
         return;
     }
     next();
