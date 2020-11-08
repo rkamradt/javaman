@@ -5,7 +5,7 @@
 const MAXY = 100;
 const MAXX = 100;
 
- export default class World {
+export default class World {
 
   constructor() {
     this.users = new Map();
@@ -14,9 +14,7 @@ const MAXX = 100;
   addUser(claims) {
     this.users.set(claims.uid, {
       cursorx: 0,
-      previousx: 0,
       cursory: 0,
-      previousy: 0,
       uid: claims.uid,
       userId: claims.sub
     })
@@ -32,7 +30,7 @@ const MAXX = 100;
     this.field = []
     this.users.clear()
     const ret = {
-      'world': this.field,
+      'field': this.field,
       'uid': claims.uid,
       'user': claims.sub,
       'users': Object.fromEntries(this.users)
@@ -69,27 +67,6 @@ const MAXX = 100;
     })
     console.log('returning ' + ret)
     return ret;
-  }
-  moveTo(claims, x, y) {
-    if(!this.users.has(claims.uid)) {
-      this.addUser(claims)
-    }
-    const user = this.users.get(claims.uid)
-    if(x < 0) {
-      x = 0;
-    } else if(x >= MAXX) {
-      x = MAXX-1;
-    }
-    if(y < 0) {
-      y = 0;
-    } else if(y >= MAXY) {
-      y = MAXY-1;
-    }
-    user.cursorx = x
-    user.previousx = x
-    user.cursory = y
-    user.previousy = y
-    return this.getState(claims)
   }
   move(claims,direction) {
     if(!this.users.has(claims.uid)) {
