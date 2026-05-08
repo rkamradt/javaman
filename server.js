@@ -5,7 +5,6 @@
 import express from 'express'
 import cors from 'cors'
 var morgan = require('morgan')
-var cookieParser = require('cookie-parser')
 import WorldRoute from './server/worldroute.js'
 import World from './server/world.js'
 // JWT validation is handled by the api-gateway (Cloudflare tunnel).
@@ -23,7 +22,6 @@ function authenticationRequired(req, res, next) {
 var app = express()
 const worldRoute = new WorldRoute(new World())
 
-app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
