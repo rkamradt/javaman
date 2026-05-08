@@ -8,18 +8,15 @@ var morgan = require('morgan')
 var cookieParser = require('cookie-parser')
 import WorldRoute from './server/worldroute.js'
 import World from './server/world.js'
-const { auth } = require('express-oauth2-jwt-bearer')
-
-const authenticationRequired = auth({
-  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
-  audience: process.env.AUTH0_AUDIENCE,
-})
-
-// Bridge Auth0's req.auth.payload to the req.jwt.claims shape that worldroute
-// expects. Falls back uid to sub since Auth0 does not add uid by default.
-function jwtBridge(req, res, next) {
-  const payload = req.auth.payload
-  req.jwt = { claims: { ...payload, uid: payload.uid || payload.sub } }
+// JWT validation is handled by the api-gateway (Cloudflare tunnel).
+// The gateway sets X-User-ID to the token subject before forwarding.
+function authenticationRequired(req, res, next) {
+  const userId = req.headers['x-user-id']
+  if (!userId) {
+    res.status(401).send('Unauthorized')
+    return
+  }
+  req.jwt = { claims: { sub: userId, uid: userId } }
   next()
 }
 
@@ -33,7 +30,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(morgan('dev'))
 
-app.use('/api', authenticationRequired, jwtBridge, worldRoute.route.bind(worldRoute))
+app.use('/api', authenticationRequired, worldRoute.route.bind(worldRoute))
 
 const { PORT = 3001 } = process.env
 
