@@ -8,38 +8,19 @@ var morgan = require('morgan')
 var cookieParser = require('cookie-parser')
 import WorldRoute from './server/worldroute.js'
 import World from './server/world.js'
-const OktaJwtVerifier = require('@okta/jwt-verifier')
+const { auth } = require('express-oauth2-jwt-bearer')
 
-const oktaJwtVerifier = new OktaJwtVerifier({
-  clientId: '0oag1oxllhj9N2SPV4x6',
-  issuer: 'https://dev-804011.okta.com/oauth2/default'
-});
+const authenticationRequired = auth({
+  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+  audience: process.env.AUTH0_AUDIENCE,
+})
 
-/**
- * A simple middleware that asserts valid access tokens and sends 401 responses
- * if the token is not present or fails validation.  If the token is valid its
- * contents are attached to req.jwt
- */
-function authenticationRequired(req, res, next) {
-  const authHeader = req.headers.authorization || ''
-  const match = authHeader.match(/Bearer (.+)/)
-
-  if (!match) {
-    res.status(401)
-    return next('Unauthorized')
-  }
-
-  const accessToken = match[1];
-  const audience = 'api://default'
-  return oktaJwtVerifier.verifyAccessToken(accessToken, audience)
-    .then((jwt) => {
-      req.jwt = jwt
-      next()
-    })
-    .catch((err) => {
-      console.log('error verifying token ' + err)
-      res.status(401).send(err.message)
-    })
+// Bridge Auth0's req.auth.payload to the req.jwt.claims shape that worldroute
+// expects. Falls back uid to sub since Auth0 does not add uid by default.
+function jwtBridge(req, res, next) {
+  const payload = req.auth.payload
+  req.jwt = { claims: { ...payload, uid: payload.uid || payload.sub } }
+  next()
 }
 
 var app = express()
@@ -52,7 +33,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(morgan('dev'))
 
-app.use('/api', authenticationRequired, worldRoute.route.bind(worldRoute))
+app.use('/api', authenticationRequired, jwtBridge, worldRoute.route.bind(worldRoute))
 
 const { PORT = 3001 } = process.env
 
