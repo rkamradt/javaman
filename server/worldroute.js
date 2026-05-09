@@ -2,7 +2,7 @@
  * Copyright 2015 randalkamradt.
  *
  */
-export default class WorldRoute {
+class WorldRoute {
 
  constructor(world) {
     this.world = world
@@ -37,3 +37,5 @@ export default class WorldRoute {
     next();
   }
 }
+
+module.exports = WorldRoute

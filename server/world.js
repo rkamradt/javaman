@@ -5,7 +5,7 @@
 const MAXY = 100;
 const MAXX = 100;
 
-export default class World {
+class World {
 
   constructor() {
     this.users = new Map();
@@ -91,3 +91,5 @@ export default class World {
   }
 
 }
+
+module.exports = World

@@ -2,11 +2,11 @@
  * Copyright 2018 randalkamradt.
  *
  */
-import express from 'express'
-import cors from 'cors'
-var morgan = require('morgan')
-import WorldRoute from './server/worldroute.js'
-import World from './server/world.js'
+const express = require('express')
+const cors = require('cors')
+const morgan = require('morgan')
+const WorldRoute = require('./server/worldroute.js')
+const World = require('./server/world.js')
 // JWT validation is handled by the api-gateway (Cloudflare tunnel).
 // The gateway sets X-User-ID to the token subject before forwarding.
 function authenticationRequired(req, res, next) {
