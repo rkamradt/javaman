@@ -1,35 +1,51 @@
-/*
- * Copyright 2018 randalkamradt.
- *
- */
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
-const WorldRoute = require('./server/worldroute.js')
-const World = require('./server/world.js')
-// JWT validation is handled by the api-gateway (Cloudflare tunnel).
-// The gateway sets X-User-ID to the token subject before forwarding.
-function authenticationRequired(req, res, next) {
+const game = require('./game')
+
+const app = express()
+app.use(cors())
+app.use(express.json())
+app.use(morgan('combined'))
+
+app.get('/health', (_req, res) => res.json({ status: 'ok' }))
+
+function requireAuth(req, res, next) {
   const userId = req.headers['x-user-id']
-  if (!userId) {
-    res.status(401).send('Unauthorized')
-    return
-  }
-  req.jwt = { claims: { sub: userId, uid: userId } }
+  if (!userId) return res.status(401).json({ error: 'unauthorized' })
+  req.userId = userId
   next()
 }
 
-var app = express()
-const worldRoute = new WorldRoute(new World())
+const VALID_DIRECTIONS = new Set(['UP', 'DOWN', 'LEFT', 'RIGHT'])
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.post('/v1/game/join', requireAuth, async (req, res) => {
+  const state = await game.join(req.userId)
+  res.json(state)
+})
 
-app.use(morgan('dev'))
+app.get('/v1/game/state', requireAuth, async (req, res) => {
+  const state = await game.getState(req.userId)
+  res.json(state)
+})
 
-app.use('/api', authenticationRequired, worldRoute.route.bind(worldRoute))
+app.post('/v1/game/move', requireAuth, async (req, res) => {
+  const { direction } = req.body
+  if (!VALID_DIRECTIONS.has(direction)) {
+    return res.status(400).json({ error: 'direction must be UP, DOWN, LEFT, or RIGHT' })
+  }
+  const state = await game.move(req.userId, direction)
+  res.json(state)
+})
 
-const { PORT = 3001 } = process.env
+app.post('/v1/game/logoff', requireAuth, async (req, res) => {
+  await game.logoff(req.userId)
+  res.json({ ok: true })
+})
 
-app.listen(PORT, () => console.log(`javaman listening on port ${PORT}!`))
+app.post('/v1/game/reset', requireAuth, async (req, res) => {
+  const state = await game.resetPlayer(req.userId)
+  res.json(state)
+})
+
+module.exports = app
