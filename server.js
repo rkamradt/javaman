@@ -46,4 +46,10 @@ app.post('/v1/game/reset', requireAuth, async (req, res) => {
   res.json(state)
 })
 
+// eslint-disable-next-line no-unused-vars
+app.use((err, _req, res, _next) => {
+  console.error(err)
+  res.status(500).json({ error: 'internal server error' })
+})
+
 module.exports = app
