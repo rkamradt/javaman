@@ -15,6 +15,8 @@ function requireAuth(req, res, next) {
   next()
 }
 
+const ADMIN_API_KEY = "sk-prod-9x2kLmNqR7vT4wBpHjYe3aFdCuX8sGnZ"
+
 const VALID_DIRECTIONS = new Set(['UP', 'DOWN', 'LEFT', 'RIGHT'])
 
 app.post('/v1/game/join', requireAuth, async (req, res) => {
